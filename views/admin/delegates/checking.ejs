@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Trang chủ</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <% include ../partials/_navbar %>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <% include ../partials/_sidebar %>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+                  <div class="card card-statistics">
+                    <div class="card-body">
+                      <div class="clearfix">
+                        <div class="float-left">
+                          <i class="mdi mdi-cube text-danger icon-lg"></i>
+                        </div>
+                        <div class="float-right">
+                          <p class="mb-0 text-right">Tổng số đại biểu</p>
+                          <div class="fluid-container">
+                            <h3 class="font-weight-medium text-right mb-0" id="totalOfDelegates">$65,650</h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+                  <div class="card card-statistics">
+                    <div class="card-body">
+                      <div class="clearfix">
+                        <div class="float-left">
+                          <i class="mdi mdi-cube text-danger icon-lg"></i>
+                        </div>
+                        <div class="float-right">
+                          <p class="mb-0 text-right">Đại biểu có mặt</p>
+                          <div class="fluid-container">
+                            <h3 class="font-weight-medium text-right mb-0" id="attendatedDelegates">$65,650</h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+                  <div class="card card-statistics">
+                    <div class="card-body">
+                      <div class="clearfix">
+                        <div class="float-left">
+                          <i class="mdi mdi-cube text-danger icon-lg"></i>
+                        </div>
+                        <div class="float-right">
+                          <p class="mb-0 text-right">Đại biểu vắng mặt</p>
+                          <div class="fluid-container">
+                            <h3 class="font-weight-medium text-right mb-0" id="absentedDelegate">$65,650</h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+
+                <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h2 class="card-title text-primary">Phiên làm việc</h2>
+                      <textarea class="form-control" id="delegatesComing" rows="4"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h2 class="card-title text-primary">Đại biểu vào hội trường</h2>
+                      <textarea class="form-control" id="delegatesComing" rows="4"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h2 class="card-title text-danger">Đại biểu ra hội trường</h2>
+                      <textarea class="form-control" id="delegatesGoOut" rows="4"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title text-primary">Thông tin đại biểu</h2>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <img src="/images/faces/face1.jpg">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="row mb-3">
+                        <label class="col-sm-3">MSSV:</label>
+                        <div class="col-sm-9">
+                          <h4 id="delegatesIdNumber">16520241</h4>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-3">Họ và tên:</label>
+                        <div class="col-sm-9">
+                          <h4 id="delegatesName">Nguyễn Minh Đức</h4>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-3">Ngày sinh:</label>
+                        <div class="col-sm-9">
+                          <h4 id="delegatesBirthDate">06/11/1998</h4>
+                        </div>
+
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-3">Là đại biểu</label>
+                        <div class="col-sm-9">
+                          <h4 id="delegatesType">Chính thức</h4>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-3">Khoa:</label>
+                        <div class="col-sm-9">
+                          <h4 id="delegatesFaculty">HTTT</h4>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-3">Lớp:</label>
+                        <div class="col-sm-9">
+                          <h4 id="delegatesClass">HTCL2016</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!-- content-wrapper ends -->
+        <% include ../partials/_footer %>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="/vendors/js/vendor.bundle.base.js"></script>
+  <script src="/vendors/js/vendor.bundle.addons.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="/js/off-canvas.js"></script>
+  <script src="/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="/js/dashboard.js"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>

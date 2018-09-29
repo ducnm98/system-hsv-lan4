@@ -1,4 +1,6 @@
 var router = require('express').Router();
 
-require('./getQrCode')(router);
+require('./getCode')(router);
+require('./checking')(router);
+
 module.exports = router

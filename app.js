@@ -10,7 +10,6 @@ var config = require("./config/index");
 var passport = require("passport");
 
 
-
 require("./config/connectDatabase");
 require("./config/databaseSchema");
 

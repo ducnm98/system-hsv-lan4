@@ -7,7 +7,7 @@ module.exports = {
       });
     },
     redirectToLogin: res => {
-      res.redirect('/login')
+      res.redirect('/admin/login')
     },
     errorProcess: (res, err) => {
       return res.status(500).send({
