@@ -95,7 +95,13 @@
                   <div class="card">
                     <div class="card-body">
                       <h2 class="card-title text-primary">Phiên làm việc</h2>
-                      <textarea class="form-control" id="delegatesComing" rows="4"></textarea>
+                      <select class="form-control form-control-lg" id="session">
+                        <% sessionList.map(item => { %>
+                        <option value="<%- item._id %>">
+                          <%- item.name %>
+                        </option>
+                        <% }) %>
+                      </select>
                     </div>
                   </div>
                 </div>

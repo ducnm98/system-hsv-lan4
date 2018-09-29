@@ -9,7 +9,6 @@ var session = require('express-session');
 var config = require("./config/index");
 var passport = require("passport");
 
-
 require("./config/connectDatabase");
 require("./config/databaseSchema");
 
@@ -76,6 +75,7 @@ require('./config/passport')(passport);
 
 // Adding authentication function
 require("./routes/index")(app);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,8 +1,14 @@
 var router = require('express').Router();
+var { redirectToLogin } = require('../../../services/returnToUsers');
 
 router.get("/", (req, res, next) => {
-  res.render("admin");
+  if (req.isAuthenticated()) {
+    return res.render("admin");
+  } else {
+    return redirectToLogin(res)
+  }
 });
+
 require('./login')(router);
 
 module.exports = router;

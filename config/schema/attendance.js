@@ -11,6 +11,9 @@ var attendance = new mongoose.Schema({
       delegateName: {
         type: String
       },
+      gender: {
+        type: Boolean
+      },
       createdTime: {
         type: Date,
         default: new Date()

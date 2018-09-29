@@ -10,7 +10,7 @@ module.exports = router => {
   router.post(
     "/login",
     passport.authenticate("local", {
-      failureRedirect: "/login",
+      failureRedirect: "/admin/login",
       failureFlash: true
     }),
     (req, res, next) => {

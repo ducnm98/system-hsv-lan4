@@ -620,6 +620,15 @@
   <!-- Custom js for this page-->
   <script src="/js/dashboard.js"></script>
   <!-- End custom js for this page-->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+  var socket = io.connect('http://localhost:2589');
+  socket.on('reply', function (data) {
+    console.log(data);
+    socket.emit('reply', { my: 'data' });
+  });
+</script>
 </body>
 
 </html>
