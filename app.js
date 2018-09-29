@@ -5,8 +5,11 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var engine = require('ejs-locals');
 var cors = require("cors");
+var session = require('express-session');
 var config = require("./config/index");
-var mongoose = require("mongoose");
+var passport = require("passport");
+
+
 
 require("./config/connectDatabase");
 require("./config/databaseSchema");
@@ -49,6 +52,28 @@ if (app.get("env") === "production") {
   app.use(cors());
   require("./routes/setup")(app);
 }
+
+//express-session middleware
+app.use(
+  session({
+    name: 'system_hsv_lan4',
+    proxy: true,
+    resave: true,
+    secret: "system_hsv_lan4.secrect", // session secret
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false /*Use 'true' without setting up HTTPS will result in redirect errors*/,
+    }
+  })
+);
+
+//PassportJS middleware
+app.use(passport.initialize());
+app.use(passport.session()); //persistent login sessions
+
+// connect to passport config
+require('./config/passport')(passport);
 
 // Adding authentication function
 require("./routes/index")(app);

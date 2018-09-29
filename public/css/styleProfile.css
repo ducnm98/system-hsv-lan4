@@ -1,0 +1,13 @@
+.form-control {
+  border: 1px solid #9b9ea3;
+}
+
+.btn i {
+  margin-right: 0px;
+  font-size: 18px;
+}
+
+.card .card-body {
+  padding: 1.88rem 1.81rem;
+  border: 1px solid #b2b8c1;
+}

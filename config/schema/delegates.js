@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var delegates = new mongoose.Schema({
+    IdNumber: { type: String },
     email: { type: String },
     password: { type: String },
     birthDate: { type: Date },
@@ -13,6 +14,8 @@ var delegates = new mongoose.Schema({
     dateInYouthUnion: { type: Date },
     dateInStudentAssociation: { type: Date },
     typeOfDelegate: { type: Boolean },
+    imageLink: { type: String },
+    roles: [{ type: String }]
 })
 
 module.exports = delegates;
