@@ -1,5 +1,5 @@
 module.exports = {
-    domain: 'daihoi.diachido.info',
+    domain: 'http://daihoi.diachido.info',
     serectKey: "daihoi_hoisinhvien.serectKey",
 
 }

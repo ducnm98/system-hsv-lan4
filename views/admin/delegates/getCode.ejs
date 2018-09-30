@@ -38,17 +38,25 @@
                     <div class="card-body">
                       <h2 class="card-title text-primary">Nhập mã số sinh viên</h2>
                       <textarea class="form-control mb-3" id="IdNumber" rows="4"></textarea>
-                      <button type="button" class="btn btn-primary btn-fw btn-block">
+                      <button type="button" class="btn btn-primary btn-fw btn-block" id="findDelegates">
                         <i class="fa fa-search"></i>Tìm kiếm</button>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-md-12 grid-margin stretch-card">
+                <div class="col-md-6 grid-margin stretch-card">
                   <div class="card">
                     <div class="card-body">
                       <h2 class="card-title text-primary">Mã barcode</h2>
                       <img id="delegatesBarcode" src="/images/barcode.jpg" style="width: 100%; height: auto;">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h2 class="card-title text-primary">Mã qrCode</h2>
+                      <img id="delegatesQrcode" src="/images/barcode.jpg" style="width: 100%; height: auto;">
                     </div>
                   </div>
                 </div>
@@ -62,7 +70,7 @@
                   <h2 class="card-title text-primary">Thông tin đại biểu</h2>
                   <div class="row">
                     <div class="col-md-4">
-                      <img src="/images/faces/face1.jpg">
+                      <img src="/images/faces/face1.jpg" id="delegatesImage">
                     </div>
                     <div class="col-md-8">
                       <div class="row mb-3">
@@ -137,7 +145,37 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="/js/dashboard.js"></script>
+  <script src="/js/notify.min.js"></script>
+
   <!-- End custom js for this page-->
+  <script>
+    $('#findDelegates').on('click', function () {
+      let IdNumber = $('#IdNumber').val();
+      $.ajax({
+        url: `/admin/delegates/get-code/${IdNumber}`,
+        method: "GET",
+        success: function (result) {
+          let userInfo = result.data;
+          let birthDate = new Date(userInfo.birthDate);
+          $('#findDelegates').val('');
+          $('#delegatesIdNumber').text(userInfo.IdNumber);
+          $('#delegatesName').text(userInfo.fullName);
+          $('#delegatesBirthDate').text(`${birthDate.getDate()}/${birthDate.getMonth() + 1}/${birthDate.getFullYear()}`);
+          $('#delegatesType').text(userInfo.typeOfDelegate);
+          $('#delegatesFaculty').text(userInfo.faculty);
+          $('#delegatesClass').text(userInfo.class);
+          $('#delegatesImage').attr("src", userInfo.imageLink);
+          $('#delegatesBarcode').attr("src", userInfo.barCode);
+          $('#delegatesQrcode').attr("src", userInfo.qrCode);
+          $('#findDelegates').notify("Tìm kiếm hoàn tất", "success");
+        },
+        error: function (result) {
+          $('#findDelegates').val('');
+          $('#findDelegates').notify("Đại biểu không tồn tại", "danger");
+        }
+      })
+    })
+  </script>
 </body>
 
 </html>

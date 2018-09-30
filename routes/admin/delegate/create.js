@@ -1,8 +1,10 @@
 var { StoreFile } = require("../../../services/uploadFile");
-var { redirectToLogin } = require("../../../services/returnToUsers");
+var { redirectToLogin, success } = require("../../../services/returnToUsers");
 var readXlsxFile = require("read-excel-file/node");
 var fs = require("fs");
 var mongoose = require('mongoose');
+var { createAndSaveBarCode } = require('../../../services/createBarCode');
+var { createAndSaveQrCode } = require('../../../services/createQrCode');
 
 module.exports = router => {
   router.post("/create-by-file", StoreFile('documents').any(), (req, res, next) => {
@@ -81,7 +83,8 @@ module.exports = router => {
             mongoose.model('delegates').create(item, (err, result) => {
               if (err) return returnToUser.errorProcess(res, err);
               if (result)
-                console.log(result)
+                createAndSaveBarCode(result._id, result._id);
+                createAndSaveQrCode(result._id, result._id);
             })
           })
           return returnToUser.success(res, "Done", rows)
@@ -101,14 +104,26 @@ module.exports = router => {
         roles: [req.body.roles]
       }
       mongoose.model('delegates').create(insert, (err, result) => {
-        console.log(err, result)
         if (err) throw err;
         if (result) {
+          createAndSaveBarCode(result._id, result._id);
+          createAndSaveQrCode(result._id, result._id);
           return res.redirect('/admin/delegates')
         }
       })
     } else {
       return redirectToLogin(res)
     }
+  });
+
+  router.get('/create/:IdNumber', (req, res, next) => {
+    mongoose.model('delegates').findOne({ IdNumber: req.params.IdNumber}, (err, result) => {
+      if (err) errorProcess(res, err);
+      if (result) {
+        return success(res, "User already exists", true)
+      } else {
+        return success(res, "You can create", false)
+      }
+    })
   })
 };

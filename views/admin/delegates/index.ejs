@@ -37,8 +37,10 @@
                     <h4 class="card-title">Danh sách các Đại biểu</h4>
                   </div>
                   <div class="col-md-6 text-right">
-                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createNewDelegates">Thêm mới</button>
-                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createNewDelegatesByFile">Nhập file</button>
+                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createNewDelegates">Thêm
+                      mới</button>
+                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createNewDelegatesByFile">Nhập
+                      file</button>
                   </div>
                 </div>
                 <div class="table-responsive">
@@ -102,7 +104,12 @@
                           <%- item.dateInStudentAssociation %>
                         </td>
                         <td>
-                          ABC
+                          <!-- <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="editDelegate(<%- item._id %>)" data-toggle="modal" data-target="#createNewDelegatesByFile">
+                            <i class="fa fa-edit"></i>
+                          </button> -->
+                          <button type="button" class="btn btn-icons btn-rounded btn-outline-warning" onclick="removeDelegate('<%- item._id %>')" data-toggle="modal" data-target="#deleteModal">
+                            <i class="fa fa-trash-o"></i>
+                          </button>
                         </td>
                       </tr>
                       <% }) %>
@@ -127,7 +134,7 @@
   <!-- plugins:js -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>
   <script src="/vendors/js/vendor.bundle.addons.js"></script>
- 
+
 
   <!-- endinject -->
   <!-- Plugin js for this page-->
@@ -138,12 +145,33 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="/js/dashboard.js"></script>
+  <script src="/js/notify.min.js"></script>
   <!-- End custom js for this page-->
 
   <% include ./modal/createNewDelegates %>
 
   <% include ./modal/createNewDelegatesByFile %>
+  <% include ./modal/deleteDelegates %>
 
+  <script>
+    var delegatesId;
+    function removeDelegate(id) {
+      delegatesId = id;
+      console.log(id)
+    }
+  </script>
+  <script>
+    function deleteDelegates() {
+      console.log(delegatesId)
+      $.ajax({
+        url: '/admin/delegates/' + delegatesId,
+        method: "DELETE",
+        success: function(result) {
+          location.reload();
+        }
+      })
+    }
+  </script>
 </body>
 
 </html>
