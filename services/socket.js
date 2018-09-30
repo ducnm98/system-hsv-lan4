@@ -16,7 +16,7 @@ module.exports = {
   delegatesIn: (data) => {
     io.emit('delegatesIn', data)
   },
-  // delegatesOut: (data) => {
-  //   io.emit('delegatesOut', data)
-  // }
+  delegatesOut: (data) => {
+    io.emit('delegatesOut', data)
+  }
 }

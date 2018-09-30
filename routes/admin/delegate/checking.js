@@ -1,6 +1,6 @@
 var { redirectToLogin, success, successWithNoData, errorProcess, errorWithMess } = require("../../../services/returnToUsers");
 var mongoose = require('mongoose');
-var { updateNumberOfDelegates, delegatesIn } = require('../../../services/socket');
+var { updateNumberOfDelegates, delegatesIn, delegatesOut } = require('../../../services/socket');
 
 module.exports = router => {
   router.get("/checking", (req, res, next) => {
@@ -72,7 +72,8 @@ module.exports = router => {
           mongoose.model('attendance').findOneAndUpdate({ _id: req.params.sessionId}, update, option, (err, attendance) => {
             if (err) return errorProcess(res, err);
             if (attendance) {
-              updateNumberOfDelegates(attendance)
+              updateNumberOfDelegates(attendance);
+              delegatesOut(userInfo);
               return success(res, "Done", { userInfo, attendance });
             } else {
               return errorWithMess(res, 'Adding delegates fail')
