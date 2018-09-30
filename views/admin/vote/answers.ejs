@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Trang chủ</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/iconfonts/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+      <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
+
+        <div class="col-md-4 grid-margin stretch-card mx-auto" id="result" style="display: none;">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title text-primary mb-5">Câu hỏi hiện tại</h2>
+              <div class="wrapper d-flex justify-content-between">
+                <div class="side-left">
+                  <p class="mb-2 display-4" id="currentQuestion">The best performance</p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p class="mb-2">Số đại biểu trong phiên thảo luận</p>
+                <p class="mb-2 text-primary display-4" id="totalDelegates">0</p>
+              </div>
+              <div class="wrapper">
+                <div class="progress" style="height: 20px;">
+                  <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"
+                    style="width: 0%" id="processApprove">
+                    Đồng ý
+                  </div>
+                  <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar"
+                    style="width: 0%" id="processDisapprove">
+                    Không đồng ý
+                  </div>
+                  <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar"
+                    style="width: 100%" id="processNotAnswer">
+                    Chưa trả lời
+                  </div>
+                </div>
+              </div>
+              <div class="wrapper mt-4">
+                <div class="d-flex justify-content-between">
+                  <p class="mb-2">Đồng ý</p>
+                  <p class="mb-2 text-success display-4" id="textApprove">0</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <p class="mb-2">Không Đồng ý</p>
+                  <p class="mb-2 text-danger display-4" id="textDisapprove">0</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <p class="mb-2">Chưa trả lời</p>
+                  <p class="mb-2 text-warning display-4" id="textNotAnswer">Không xác định</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8 mx-auto" id="question">
+          <h2 class="text-center mb-4">Hiệp thương câu hỏi</h2>
+          <div class="auto-form-wrapper">
+            <div class="wrapper d-flex justify-content-between">
+              <p class="mb-2 display-4" id="currentQuestion1">Hiện tại quá trình hiệp thương chưa được bắt đầu, bạn vui
+                lòng đợi.</p>
+            </div>
+            <div class="row" style="display: none;" id="buttonVote">
+              <div class="col-md-6 col-xs-12 mt-4 mb-2">
+                <button type="button" class="btn btn-success btn-fw btn-block" onclick="approve()">
+                  <i class="mdi mdi-check"></i>Chấp nhận</button>
+              </div>
+              <div class="col-md-6 col-xs-12 mt-4 mb-2">
+                <button type="button" class="btn btn-danger btn-fw btn-block" onclick="disapprove()">
+                  <i class="mdi mdi-alert-outline"></i>Không chấp nhận</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="/vendors/js/vendor.bundle.base.js"></script>
+  <script src="/vendors/js/vendor.bundle.addons.js"></script>
+
+
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="/js/off-canvas.js"></script>
+  <script src="/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/notify.min.js"></script>
+  <!-- End custom js for this page-->
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var currentQuestionId;
+  </script>
+  <script>
+    let socket = io.connect('http://localhost:2589');
+    socket.on('currentQuestion', function (data) {
+      currentQuestionId = data.questionId;
+      $('#currentQuestion1').text(data.question);
+      $('#totalDelegates').text(data.totalDelegates);
+      $('#textNotAnswer').text(data.totalDelegates);
+      $('#buttonVote').show();
+      $('#question').show();
+      $('#result').hide();
+    });
+    socket.on('answerChange', function (data) {
+      let { approve, disApprove } = data;
+      let totalDelegates = parseInt($('#totalDelegates').text());
+      let delegatesLeft = totalDelegates - approve.length - disApprove.length;
+      
+      let approvePercent = ((approve.length / totalDelegates) * 100).toFixed(2);
+      let notAnswer = ((delegatesLeft / totalDelegates) * 100).toFixed(2);
+      let disApprovePercent = 100 - approvePercent - notAnswer;
+
+      $('#processApprove').width(`${approvePercent}%`);
+      $('#processDisapprove').width(`${disApprovePercent}%`);
+      $('#processNotAnswer').width(`${notAnswer}%`);
+      $('#textApprove').text(approve.length);
+      $('#textDisapprove').text(disApprove.length);
+      $('#textNotAnswer').text(delegatesLeft);
+    })
+  </script>
+  <script>
+    function approve() {
+      $.ajax({
+        url: '/admin/votes/question/' + currentQuestionId + '/approve',
+        method: 'POST',
+        success: function (data) {
+          $('#question').hide();
+          $('#result').show();
+        }
+      })
+    }
+  </script>
+  <script>
+    function disapprove() {
+      $.ajax({
+        url: '/admin/votes/question/' + currentQuestionId + '/disapprove',
+        method: 'POST',
+        success: function (data) {
+          $('#question').hide();
+          $('#result').show();
+        }
+      })
+    }
+  </script>
+
+
+</body>
+
+</html>

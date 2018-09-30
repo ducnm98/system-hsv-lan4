@@ -12,9 +12,9 @@ module.exports = router => {
         mongoose.model('delegates').find().skip(skip).limit(pageSize).exec((err, delegatesList) => {
           if (err) throw err;
           if (delegatesList) {
-            return res.render('admin/delegates', { total, skip, pageSize, delegatesList })
+            return res.render('admin/delegates', { total, skip, pageSize, delegatesList, roles: req.user.roles })
           } else {
-            return res.render('admin/delegates', { total, skip, pageSize, delegatesList })
+            return res.render('admin/delegates', { total, skip, pageSize, delegatesList, roles: req.user.roles })
           }
         })
       })

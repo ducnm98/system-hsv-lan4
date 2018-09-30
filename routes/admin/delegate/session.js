@@ -8,7 +8,8 @@ module.exports = router => {
         if (err) throw err;
         if (result) {
             res.render("admin/delegates/session", {
-              sessionList: result
+              sessionList: result,
+              roles: req.user.roles
             });
         }
       })

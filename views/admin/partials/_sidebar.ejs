@@ -9,6 +9,14 @@
     </li>
 
     <li class="nav-item">
+      <a class="nav-link" href="/admin/votes/answers">
+        <i class="menu-icon mdi mdi-backup-restore"></i>
+        <span class="menu-title">Biểu quyết</span>
+      </a>
+    </li>
+
+    <% if(roles.includes("ADMIN") || roles.includes("CHECKING")) { %>
+    <li class="nav-item">
       <a class="nav-link" href="/admin/delegates/checking">
         <i class="menu-icon mdi mdi-chart-line"></i>
         <span class="menu-title">Điểm danh đại biểu</span>
@@ -21,49 +29,30 @@
         <span class="menu-title">Lấy thông tin đại biểu</span>
       </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/tin-tuc">
-        <i class="menu-icon mdi mdi-table"></i>
-        <span class="menu-title">Tin tức mới</span>
-      </a>
-    </li>
+
+    <% } %>
+
+    <% if(roles.includes("ADMIN")) { %>
+
     <li class="nav-item">
       <a class="nav-link" href="/admin/delegates/session">
-        <i class="menu-icon mdi mdi-sticker"></i>
+        <i class="menu-icon mdi mdi-chart-line"></i>
         <span class="menu-title">Quản lý phiên làm việc</span>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="/admin/delegates">
-        <i class="menu-icon mdi mdi-sticker"></i>
+        <i class="menu-icon mdi mdi-table"></i>
         <span class="menu-title">Quản lý danh sách Đại biểu</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-        <i class="menu-icon mdi mdi-restart"></i>
-        <span class="menu-title">Tài khoản</span>
-        <i class="menu-arrow"></i>
+      <a class="nav-link" href="/admin/votes">
+        <i class="menu-icon mdi mdi-backup-restore"></i>
+        <span class="menu-title">Quản lý câu hỏi</span>
       </a>
-      <div class="collapse" id="auth">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"> Tất cả tài khoản </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"> Tạo tài khoản </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"> Đổi mật khẩu </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"> 404 </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"> 500 </a>
-          </li>
-        </ul>
-      </div>
     </li>
+
+    <% } %>
   </ul>
 </nav>

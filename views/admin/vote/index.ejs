@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Trang chủ</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/iconfonts/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <% include ../partials/_navbar %>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <% include ../partials/_sidebar %>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+
+            <div class="col-md-8 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <h4 class="card-title">Danh sách các Đại biểu</h4>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <select class="form-control" id="session" name="roles">
+                          <% sessionList.map(item => { %>
+                          <option value="<%- item._id %>">
+                            <%- item.name %>
+                          </option>
+                          <% }) %>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 text-right">
+                      <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createQuestion">Thêm
+                        mới</button>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>
+                            #
+                          </th>
+                          <th>
+                            Tên câu hỏi
+                          </th>
+                          <th>
+                            Số ĐB đồng ý
+                          </th>
+                          <th>
+                            Số ĐB không đồng ý
+                          </th>
+                          <th>
+                            Hành động
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% votesList.map((item, index) => { %>
+                        <tr>
+                          <td class="py-1">
+                            <%- index + 1 %>
+                          </td>
+                          <td>
+                            <%- item.question %>
+                          </td>
+                          <td>
+                            <%- item.approve.length %>
+                          </td>
+                          <td>
+                            <%- item.disApprove.length %>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="chooseQuestion('<%- item._id %>')"
+                              data-toggle="modal" data-target="#askModal">
+                              <i class="fa fa fa-telegram"></i>
+                            </button>
+                            <button type="button" class="btn btn-icons btn-rounded btn-outline-warning" onclick="chooseQuestion('<%- item._id %>')"
+                              data-toggle="modal" data-target="#deleteModal">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title text-primary mb-5">Câu hỏi hiện tại</h2>
+                  <div class="wrapper d-flex justify-content-between">
+                    <div class="side-left">
+                      <p class="mb-2 display-4" id="currentQuestion">The best performance</p>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">Số đại biểu trong phiên thảo luận</p>
+                    <p class="mb-2 text-primary display-4" id="totalDelegates">0</p>
+                  </div>
+                  <div class="wrapper">
+                    <div class="progress" style="height: 20px;">
+                      <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"
+                        style="width: 0%" id="processApprove">
+                        Đồng ý
+                      </div>
+                      <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar"
+                        style="width: 0%" id="processDisapprove">
+                        Không đồng ý
+                      </div>
+                      <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar"
+                        style="width: 100%" id="processNotAnswer">
+                        Chưa trả lời
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wrapper mt-4">
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Đồng ý</p>
+                      <p class="mb-2 text-success display-4" id="textApprove">0</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Không Đồng ý</p>
+                      <p class="mb-2 text-danger display-4" id="textDisapprove">0</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Chưa trả lời</p>
+                      <p class="mb-2 text-warning display-4" id="textNotAnswer">Không xác định</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+        <!-- content-wrapper ends -->
+        <% include ../partials/_footer %>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="/vendors/js/vendor.bundle.base.js"></script>
+  <script src="/vendors/js/vendor.bundle.addons.js"></script>
+
+
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="/js/off-canvas.js"></script>
+  <script src="/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/notify.min.js"></script>
+  <!-- End custom js for this page-->
+
+  <% include ./modal/deleteQuestion %>
+  <% include ./modal/createQuestion %>
+  <% include ./modal/askThisQuestion %>
+
+  <script>
+    var questionId;
+    function chooseQuestion(id) {
+      questionId = id;
+    }
+  </script>
+  <script>
+    function deleteQuestion() {
+      $.ajax({
+        url: '/admin/votes/' + questionId,
+        method: "DELETE",
+        success: function (result) {
+          location.reload();
+        }
+      })
+    }
+  </script>
+
+  <script>
+    function voteQuestion() {
+      let sessionId = $('#session').val();
+      $.ajax({
+        url: '/admin/votes/question/' + sessionId + '/' + questionId,
+        method: "PUT",
+        success: function (result) {
+          $.notify("Bắt đầu hiệp thương câu hỏi", 'success')
+        }
+      })
+    }
+  </script>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let socket = io.connect('http://localhost:2589');
+    socket.on('currentQuestion', function (data) {
+      $('#currentQuestion').text(data.question);
+      $('#totalDelegates').text(data.totalDelegates);
+      $('#textNotAnswer').text(data.totalDelegates);
+    });
+    socket.on('answerChange', function (data) {
+      let { approve, disApprove } = data;
+      let totalDelegates = parseInt($('#totalDelegates').text());
+      let delegatesLeft = totalDelegates - approve.length - disApprove.length;
+      
+      let approvePercent = ((approve.length / totalDelegates) * 100).toFixed(2);
+      let notAnswer = ((delegatesLeft / totalDelegates) * 100).toFixed(2);
+      let disApprovePercent = 100 - approvePercent - notAnswer;
+
+      $('#processApprove').width(`${approvePercent}%`);
+      $('#processDisapprove').width(`${disApprovePercent}%`);
+      $('#processNotAnswer').width(`${notAnswer}%`);
+      $('#textApprove').text(approve.length);
+      $('#textDisapprove').text(disApprove.length);
+      $('#textNotAnswer').text(delegatesLeft);
+    })
+  </script>
+
+
+</body>
+
+</html>

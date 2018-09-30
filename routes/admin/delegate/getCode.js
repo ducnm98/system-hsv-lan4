@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 module.exports = router => {
   router.get("/get-code", (req, res, next) => {
     if (req.isAuthenticated()) {
-      res.render("admin/delegates/getCode");
+      res.render("admin/delegates/getCode", { roles: req.user.roles });
     } else {
       return redirectToLogin(res);
     }

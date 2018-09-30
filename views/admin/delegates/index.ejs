@@ -86,7 +86,7 @@
                           <%- item.fullName %>
                         </td>
                         <td>
-                          <%- item.gender %>
+                          <%- item.gender ? "Nam" : "Nữ" %>
                         </td>
                         <td>
                           <%- item.class %>
@@ -98,10 +98,12 @@
                           <%- item.typeOfDelegate %>
                         </td>
                         <td>
-                          <%- item.dateInYouthUnion %>
+                          <% let dateInYouthUnion = new Date(item.dateInYouthUnion) %>
+                          <%- dateInYouthUnion.getDate() %>/<%- dateInYouthUnion.getMonth() + 1 %>/<%- dateInYouthUnion.getFullYear() %>
                         </td>
                         <td>
-                          <%- item.dateInStudentAssociation %>
+                          <% let dateInStudentAssociation = new Date(item.dateInStudentAssociation) %>
+                          <%- dateInStudentAssociation.getDate() %>/<%- dateInStudentAssociation.getMonth() + 1 %>/<%- dateInStudentAssociation.getFullYear() %>
                         </td>
                         <td>
                           <!-- <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="editDelegate(<%- item._id %>)" data-toggle="modal" data-target="#createNewDelegatesByFile">

@@ -17,8 +17,9 @@ var attendance = new mongoose.Schema({
       createdTime: {
         type: Date,
         default: new Date()
-      }
-    }
+      },
+      _id: false
+    },
   ]
 });
 
