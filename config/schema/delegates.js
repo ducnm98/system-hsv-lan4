@@ -17,7 +17,9 @@ var delegates = new mongoose.Schema({
   dateInStudentAssociation: { type: Date },
   typeOfDelegate: { type: String, enum: TYPE_OF_DELEGATES },
   imageLink: { type: String },
-  roles: [{ type: String, enum: TYPE_OF_USERS }]
+  roles: [{ type: String, enum: TYPE_OF_USERS }],
+  barCode: { type: String },
+  qrCode: { type: String },
 });
 
 module.exports = delegates;

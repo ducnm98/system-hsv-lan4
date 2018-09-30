@@ -1,8 +1,12 @@
 var { StoreFile } = require("../../../services/uploadFile");
-var { redirectToLogin } = require("../../../services/returnToUsers");
+var { redirectToLogin, success } = require("../../../services/returnToUsers");
 var readXlsxFile = require("read-excel-file/node");
 var fs = require("fs");
 var mongoose = require('mongoose');
+var { createAndSaveBarCode } = require('../../../services/createBarCode');
+var { createAndSaveQrCode } = require('../../../services/createQrCode');
+var bcrypt = require("bcryptjs");
+var randomString = require('randomstring');
 
 module.exports = router => {
   router.post("/create-by-file", StoreFile('documents').any(), (req, res, next) => {
@@ -10,6 +14,13 @@ module.exports = router => {
       req.files[0].link = req.files[0].destination + req.files[0].filename;
   
       const schema = {
+        '#': {
+          prop: 'password',
+          type: String,
+          parse(value) {
+            return randomString.generate(30);
+          }
+        },
         'IdNumber': {
           prop: 'IdNumber',
           type: String,
@@ -31,6 +42,13 @@ module.exports = router => {
         'gender': {
           prop: 'gender',
           type: Boolean,
+          parse(value) {
+            if (value == '1') {
+              return true;
+            } else {
+              return false;
+            }
+          }
         },
         'numberPhone': {
           prop: 'numberPhone',
@@ -73,18 +91,19 @@ module.exports = router => {
           type: String,
         },
       };
-  
-      readXlsxFile(fs.createReadStream(req.files[0].link), { schema }).then(({rows, err}) => {
+      readXlsxFile(fs.createReadStream(req.files[0].link), { schema }).then(async ({rows, err}) => {
         if (err) return returnToUser.errorProcess(res, err);
         if (rows.length > 0) {
-          rows.map((item, index) => {
-            mongoose.model('delegates').create(item, (err, result) => {
-              if (err) return returnToUser.errorProcess(res, err);
-              if (result)
-                console.log(result)
+          await rows.map((item, index) => {
+            item.password = bcrypt.hashSync(`item.password`, 10);
+            mongoose.model('delegates').create(item, async (err, result) => {
+              if (result) {
+                await createAndSaveBarCode(result._id);
+                await createAndSaveQrCode(result._id);
+              }
             })
           })
-          return returnToUser.success(res, "Done", rows)
+          return success(res, "Done", rows)
         }
       })
     } else {
@@ -95,20 +114,35 @@ module.exports = router => {
   router.post('/create', StoreFile('delegates').any(), (req, res, next) => {
     if (req.isAuthenticated()) {
       req.files[0].link = req.files[0].destination.substring(6, req.files[0].destination.length) + req.files[0].filename;
-      let insert = {
-        ...req.body,
-        imageLink: req.files[0].link,
-        roles: [req.body.roles]
-      }
-      mongoose.model('delegates').create(insert, (err, result) => {
-        console.log(err, result)
-        if (err) throw err;
-        if (result) {
-          return res.redirect('/admin/delegates')
+      bcrypt.hash("123", 10, (err, passHash) => {
+        let insert = {
+          ...req.body,
+          password: passHash,
+          imageLink: req.files[0].link,
+          roles: [req.body.roles]
         }
+        mongoose.model('delegates').create(insert, (err, result) => {
+          if (err) throw err;
+          if (result) {
+            createAndSaveBarCode(result._id, result._id);
+            createAndSaveQrCode(result._id, result._id);
+            return res.redirect('/admin/delegates')
+          }
+        })
       })
     } else {
       return redirectToLogin(res)
     }
+  });
+
+  router.get('/create/:IdNumber', (req, res, next) => {
+    mongoose.model('delegates').findOne({ IdNumber: req.params.IdNumber}, (err, result) => {
+      if (err) errorProcess(res, err);
+      if (result) {
+        return success(res, "User already exists", true)
+      } else {
+        return success(res, "You can create", false)
+      }
+    })
   })
 };

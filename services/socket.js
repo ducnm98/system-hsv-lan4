@@ -18,5 +18,11 @@ module.exports = {
   },
   delegatesOut: (data) => {
     io.emit('delegatesOut', data)
+  },
+  currentQuestion: (data) => {
+    io.emit('currentQuestion', data)
+  },
+  answerChange: (data) => {
+    io.emit('answerChange', data)
   }
 }

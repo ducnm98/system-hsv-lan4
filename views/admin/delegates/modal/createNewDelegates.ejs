@@ -14,7 +14,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="name">Mã số Sinh viên</label>
-                <input type="text" class="form-control" name="IdNumber" aria-describedby="IdNumber" placeholder="Mã số sinh viên"
+                <input type="text" class="form-control" name="IdNumber" aria-describedby="IdNumber" id="IdNumber" placeholder="Mã số sinh viên"
                   required>
               </div>
             </div>
@@ -136,3 +136,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  $('#IdNumber').blur(function() {
+    let IdNumber = $('#IdNumber').val();
+    $.ajax({
+      url: '/admin/delegates/create/' + IdNumber,
+      method: 'GET',
+      success: function(result) {
+        if (result.data) {
+          $('#IdNumber').notify("Mã số sinh viên này đã tồn tại", "danger");
+          $('#submit').prop('disabled', true);
+        } else {
+          $('#submit').prop('disabled', false);
+        }
+      }
+    })
+  })
+</script>

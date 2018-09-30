@@ -9,7 +9,8 @@ module.exports = router => {
         if (err) throw err;
         if (result) {
           return res.render("admin/delegates/checking", {
-            sessionList: result
+            sessionList: result,
+            roles: req.user.roles
           });
         } else {
           return errorWithMess(res, "Not done");
@@ -40,7 +41,7 @@ module.exports = router => {
             if (attendance) {
               updateNumberOfDelegates(attendance);
               delegatesIn(userInfo);
-              return success(res, "Done", { userInfo, attendance });
+              return success(res, "Done", { userInfo, attendance, roles: req.user.roles });
             } else {
               return errorWithMess(res, 'Adding delegates fail')
             }
@@ -74,7 +75,7 @@ module.exports = router => {
             if (attendance) {
               updateNumberOfDelegates(attendance);
               delegatesOut(userInfo);
-              return success(res, "Done", { userInfo, attendance });
+              return success(res, "Done", { userInfo, attendance, roles: req.user.roles });
             } else {
               return errorWithMess(res, 'Adding delegates fail')
             }

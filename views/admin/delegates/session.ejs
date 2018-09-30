@@ -72,7 +72,10 @@
                           <%- item.delegates.length %>
                         </td>
                         <td>
-                          $ 77.99
+                          <button type="button" class="btn btn-icons btn-rounded btn-outline-warning" onclick="removeSession('<%- item._id %>')"
+                            data-toggle="modal" data-target="#deleteModal">
+                            <i class="fa fa-trash-o"></i>
+                          </button>
                         </td>
                       </tr>
                       <% }) %>
@@ -109,6 +112,22 @@
   <!-- End custom js for this page-->
 
   <% include ./modal/createNewSession %>
+  <% include ./modal/deleteSession %>
+  <script>
+    var sessionId;
+    function removeSession(id) { sessionId = id; }
+  </script>
+  <script>
+    function deleteSession() {
+      $.ajax({
+        url: '/admin/delegates/session/' + sessionId,
+        method: "DELETE",
+        success: function(result) {
+          location.reload();
+        }
+      })
+    }
+  </script>
 </body>
 
 </html>

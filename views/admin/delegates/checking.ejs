@@ -206,7 +206,9 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="/js/dashboard.js"></script>
+  <script src="/js/notify.min.js"></script>
   <!-- End custom js for this page-->
+
   <script>
     $('#delegatesComing').keypress(function (e) {
       if (e.keyCode == 13) {
@@ -227,9 +229,11 @@
             $('#delegatesClass').text(userInfo.class);
             $('#delegatesImage').attr("src", userInfo.imageLink);
             $('#attendatedDelegates').text(attendance.delegates.length);
+            $('#delegatesComing').notify("Điểm danh đại biểu thành công", "success");
           },
           error: function (result) {
             $('#delegatesComing').val('');
+            $('#delegatesComing').notify("Điểm danh đại biểu thất bại", "danger");
           }
         })
       }
@@ -255,9 +259,11 @@
             $('#delegatesClass').text(userInfo.class);
             $('#delegatesImage').attr("src", userInfo.imageLink);
             $('#attendatedDelegates').text(attendance.delegates.length);
+            $('#delegatesGoOut').notify("Xác nhận đại biểu rời khỏi hội trường thành công", "success");
           },
           error: function (result) {
             $('#delegatesGoOut').val('');
+            $('#delegatesGoOut').notify("Xác nhận đại biểu thất bại", "danger");
           }
         })
       }

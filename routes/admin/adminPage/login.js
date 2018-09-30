@@ -6,6 +6,10 @@ module.exports = router => {
     res.render("login");
   });
   
+  router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/admin/login');
+  })
   //Method POST
   router.post(
     "/login",
