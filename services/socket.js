@@ -9,5 +9,14 @@ io.on('connection', function(socket){
 
 module.exports = {
   socketApi,
-  
+  updateNumberOfDelegates: (data) => {
+    let id = `totalOfDelegates-${data._id}`;
+    io.emit(id, data)
+  },
+  delegatesIn: (data) => {
+    io.emit('delegatesIn', data)
+  },
+  // delegatesOut: (data) => {
+  //   io.emit('delegatesOut', data)
+  // }
 }

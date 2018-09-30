@@ -6,7 +6,7 @@ var randomString = require('randomstring');
 
 module.exports = {
   StoreFile: (type) => {
-    let placeStore = `${type}/uploads/`;
+    let placeStore = `${type}/`;
     let storage = multer.diskStorage({
       destination: (req, file, cb) => {
         cb(null, 'public/' + placeStore)

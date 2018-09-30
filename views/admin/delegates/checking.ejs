@@ -43,7 +43,7 @@
                         <div class="float-right">
                           <p class="mb-0 text-right">Tổng số đại biểu</p>
                           <div class="fluid-container">
-                            <h3 class="font-weight-medium text-right mb-0" id="totalOfDelegates">$65,650</h3>
+                            <h3 class="font-weight-medium text-right mb-0" id="totalOfDelegates">0</h3>
                           </div>
                         </div>
                       </div>
@@ -61,7 +61,7 @@
                         <div class="float-right">
                           <p class="mb-0 text-right">Đại biểu có mặt</p>
                           <div class="fluid-container">
-                            <h3 class="font-weight-medium text-right mb-0" id="attendatedDelegates">$65,650</h3>
+                            <h3 class="font-weight-medium text-right mb-0" id="attendatedDelegates">0</h3>
                           </div>
                         </div>
                       </div>
@@ -79,7 +79,7 @@
                         <div class="float-right">
                           <p class="mb-0 text-right">Đại biểu vắng mặt</p>
                           <div class="fluid-container">
-                            <h3 class="font-weight-medium text-right mb-0" id="absentedDelegate">$65,650</h3>
+                            <h3 class="font-weight-medium text-right mb-0" id="absentedDelegate">0</h3>
                           </div>
                         </div>
                       </div>
@@ -131,47 +131,47 @@
                   <h2 class="card-title text-primary">Thông tin đại biểu</h2>
                   <div class="row">
                     <div class="col-md-4">
-                      <img src="/images/faces/face1.jpg">
+                      <img src="/images/faces/face1.jpg" id="delegatesImage" style="width: 100%; height: auto;">
                     </div>
                     <div class="col-md-8">
                       <div class="row mb-3">
                         <label class="col-sm-3">MSSV:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesIdNumber">16520241</h4>
+                          <h4 id="delegatesIdNumber">Không rõ</h4>
                         </div>
                       </div>
 
                       <div class="row mb-3">
                         <label class="col-sm-3">Họ và tên:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesName">Nguyễn Minh Đức</h4>
+                          <h4 id="delegatesName">Không rõ</h4>
                         </div>
                       </div>
 
                       <div class="row mb-3">
                         <label class="col-sm-3">Ngày sinh:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesBirthDate">06/11/1998</h4>
+                          <h4 id="delegatesBirthDate">Không rõ</h4>
                         </div>
 
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-3">Là đại biểu</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesType">Chính thức</h4>
+                          <h4 id="delegatesType">Không rõ</h4>
                         </div>
                       </div>
 
                       <div class="row mb-3">
                         <label class="col-sm-3">Khoa:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesFaculty">HTTT</h4>
+                          <h4 id="delegatesFaculty">Không rõ</h4>
                         </div>
                       </div>
                       <div class="row">
                         <label class="col-sm-3">Lớp:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesClass">HTCL2016</h4>
+                          <h4 id="delegatesClass">Không rõ</h4>
                         </div>
                       </div>
                     </div>
@@ -207,6 +207,62 @@
   <!-- Custom js for this page-->
   <script src="/js/dashboard.js"></script>
   <!-- End custom js for this page-->
+  <script>
+    $('#delegatesComing').keypress(function (e) {
+      if (e.keyCode == 13) {
+        let sessionId = $('#session').val();
+        let delegatesId = $('#delegatesComing').val();
+        $.ajax({
+          url: `/admin/delegates/checking/${sessionId}/${delegatesId}`,
+          method: "PUT",
+          success: function (result) {
+            let { userInfo, attendance } = result.data;
+            let birthDate = new Date(userInfo.birthDate);
+            $('#delegatesComing').val('');
+            $('#delegatesIdNumber').text(userInfo.IdNumber);
+            $('#delegatesName').text(userInfo.fullName);
+            $('#delegatesBirthDate').text(`${birthDate.getDate()}/${birthDate.getMonth() + 1}/${birthDate.getFullYear()}`);
+            $('#delegatesType').text(userInfo.typeOfDelegate);
+            $('#delegatesFaculty').text(userInfo.faculty);
+            $('#delegatesClass').text(userInfo.class);
+            $('#delegatesImage').attr("src", userInfo.imageLink);
+            $('#attendatedDelegates').text(attendance.delegates.length);
+          },
+          error: function (result) {
+            $('#delegatesComing').val('');
+          }
+        })
+      }
+    });
+  </script>
+  <script>
+    $('#delegatesGoOut').keypress(function (e) {
+      if (e.keyCode == 13) {
+        let sessionId = $('#session').val();
+        let delegatesId = $('#delegatesGoOut').val();
+        $.ajax({
+          url: `/admin/delegates/checking/${sessionId}/${delegatesId}`,
+          method: "DELETE",
+          success: function (result) {
+            let { userInfo } = result.data;
+            let birthDate = new Date(userInfo.birthDate);
+            $('#delegatesGoOut').val('')
+            $('#delegatesIdNumber').text(userInfo.IdNumber);
+            $('#delegatesName').text(userInfo.fullName);
+            $('#delegatesBirthDate').text(`${birthDate.getDate()}/${birthDate.getMonth() + 1}/${birthDate.getFullYear()}`);
+            $('#delegatesType').text(userInfo.typeOfDelegate);
+            $('#delegatesFaculty').text(userInfo.faculty);
+            $('#delegatesClass').text(userInfo.class);
+            $('#delegatesImage').attr("src", userInfo.imageLink);
+            $('#attendatedDelegates').text(attendance.delegates.length);
+          },
+          error: function (result) {
+            $('#delegatesGoOut').val('');
+          }
+        })
+      }
+    });
+  </script>
 </body>
 
 </html>

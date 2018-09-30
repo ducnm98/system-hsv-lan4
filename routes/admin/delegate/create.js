@@ -2,9 +2,10 @@ var { StoreFile } = require("../../../services/uploadFile");
 var { redirectToLogin } = require("../../../services/returnToUsers");
 var readXlsxFile = require("read-excel-file/node");
 var fs = require("fs");
+var mongoose = require('mongoose');
 
 module.exports = router => {
-  router.post("/create", StoreFile('documents').any, (req, res, next) => {
+  router.post("/create-by-file", StoreFile('documents').any(), (req, res, next) => {
     if (req.isAuthenticated()) {
       req.files[0].link = req.files[0].destination + req.files[0].filename;
   
@@ -89,6 +90,25 @@ module.exports = router => {
     } else {
       return redirectToLogin(res)
     }
-
   });
+
+  router.post('/create', StoreFile('delegates').any(), (req, res, next) => {
+    if (req.isAuthenticated()) {
+      req.files[0].link = req.files[0].destination.substring(6, req.files[0].destination.length) + req.files[0].filename;
+      let insert = {
+        ...req.body,
+        imageLink: req.files[0].link,
+        roles: [req.body.roles]
+      }
+      mongoose.model('delegates').create(insert, (err, result) => {
+        console.log(err, result)
+        if (err) throw err;
+        if (result) {
+          return res.redirect('/admin/delegates')
+        }
+      })
+    } else {
+      return redirectToLogin(res)
+    }
+  })
 };

@@ -1,0 +1,138 @@
+<div class="modal fade bd-example-modal-lg" id="createNewDelegates" tabindex="-1" role="dialog" aria-labelledby="createNewDelegates"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thêm mới phiên làm việc</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/admin/delegates/create" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Mã số Sinh viên</label>
+                <input type="text" class="form-control" name="IdNumber" aria-describedby="IdNumber" placeholder="Mã số sinh viên"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Họ và tên</label>
+                <input type="text" class="form-control" name="fullName" aria-describedby="fullName" placeholder="Họ và tên"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Địa chỉ email</label>
+                <input type="email" class="form-control" name="email" aria-describedby="email" placeholder="Địa chỉ email"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Ngày sinh</label>
+                <input type="date" class="form-control" name="birthDate" aria-describedby="birthDate" placeholder="Ngày sinh"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Giới tính</label>
+                <select class="form-control" id="typeOfDocuments" name="gender" required>
+                  <option value="true">Nam</option>
+                  <option value="false">Nữ</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Loại đại biểu</label>
+                <select class="form-control" id="typeOfDelegate" name="typeOfDelegate" required>
+                  <option value="ĐẠI BIỂU CHÍNH THỨC">ĐẠI BIỂU CHÍNH THỨC</option>
+                  <option value="ĐẠI BIỂU CHỈ ĐỊNH">ĐẠI BIỂU CHỈ ĐỊNH</option>
+                  <option value="ĐẠI BIỂU DỰ KHUYẾT">ĐẠI BIỂU DỰ KHUYẾT</option>
+                  <option value="ĐẠI BIỂU ĐƯƠNG NHIÊN">ĐẠI BIỂU ĐƯƠNG NHIÊN</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Số điện thoại</label>
+                <input type="text" class="form-control" name="numberPhone" aria-describedby="numberPhone" placeholder="Số điện thoại"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Lớp</label>
+                <input type="text" class="form-control" name="class" aria-describedby="class" placeholder="Lớp"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Khoa</label>
+                <input type="text" class="form-control" name="faculty" aria-describedby="faculty" placeholder="Khoa"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Dân tộc</label>
+                <input type="text" class="form-control" name="nation" aria-describedby="nation" placeholder="Dân tộc"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Tôn giáo</label>
+                <input type="text" class="form-control" name="religion" aria-describedby="religion" placeholder="Tôn giáo"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Ngày vào Đoàn</label>
+                <input type="date" class="form-control" name="dateInYouthUnion" aria-describedby="dateInYouthUnion"
+                  placeholder="Ngày vào Đoàn">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Ngày vào Hội</label>
+                <input type="date" class="form-control" name="dateInStudentAssociation" aria-describedby="dateInStudentAssociation"
+                  placeholder="Ngày vào Hội">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Hình đại diện</label>
+                <input type="file" class="form-control-file" name="imageLink" id="exampleFormControlFile1" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Quyền hạn</label>
+                <select class="form-control" id="typeOfDocuments" name="roles">
+                  <option value="">KHÔNG CÓ</option>
+                  <option value="ADMIN">ADMIN</option>
+                  <option value="CHECKING">CHECKING</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-primary" id="submit">Thêm mới</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

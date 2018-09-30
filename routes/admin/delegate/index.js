@@ -4,5 +4,6 @@ require('./getCode')(router);
 require('./checking')(router);
 require('./session')(router);
 require('./create')(router);
+require('./list')(router);
 
 module.exports = router

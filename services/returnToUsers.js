@@ -1,13 +1,13 @@
 module.exports = {
     notAllow: res => {
-      res.status(403).send({
+      return res.status(403).send({
         success: false,
         message: "You are not allowed.",
         data: null
       });
     },
     redirectToLogin: res => {
-      res.redirect('/admin/login')
+      return res.redirect('/admin/login')
     },
     errorProcess: (res, err) => {
       return res.status(500).send({

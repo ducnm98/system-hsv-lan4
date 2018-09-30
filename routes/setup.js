@@ -19,7 +19,7 @@ module.exports = app => {
         religion: '',
         dateInYouthUnion: new Date(),
         dateInStudentAssociation: new Date(),
-        typeOfDelegate: true,
+        typeOfDelegate: 'ĐẠI BIỂU CHÍNH THỨC',
         imageLink: '',
         roles: constants.IS_STAFF,
       };

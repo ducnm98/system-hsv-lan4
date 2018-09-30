@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Trang chủ</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/iconfonts/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/vendors/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <% include ../partials/_navbar %>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <% include ../partials/_sidebar %>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h4 class="card-title">Danh sách các Đại biểu</h4>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createNewDelegates">Thêm mới</button>
+                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createNewDelegatesByFile">Nhập file</button>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>
+                          #
+                        </th>
+                        <th>
+                          Họ và tên
+                        </th>
+                        <th>
+                          Giới tính
+                        </th>
+                        <th>
+                          Lớp
+                        </th>
+                        <th>
+                          Khoa
+                        </th>
+                        <th>
+                          Loại đại biểu
+                        </th>
+                        <th>
+                          Ngày vào Đoàn
+                        </th>
+                        <th>
+                          Ngày vào Hội
+                        </th>
+                        <th>
+                          Hành động
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% delegatesList.map((item, index) => { %>
+                      <tr>
+                        <td class="py-1">
+                          <%- index + 1 %>
+                        </td>
+                        <td>
+                          <%- item.fullName %>
+                        </td>
+                        <td>
+                          <%- item.gender %>
+                        </td>
+                        <td>
+                          <%- item.class %>
+                        </td>
+                        <td>
+                          <%- item.faculty %>
+                        </td>
+                        <td>
+                          <%- item.typeOfDelegate %>
+                        </td>
+                        <td>
+                          <%- item.dateInYouthUnion %>
+                        </td>
+                        <td>
+                          <%- item.dateInStudentAssociation %>
+                        </td>
+                        <td>
+                          ABC
+                        </td>
+                      </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- content-wrapper ends -->
+        <% include ../partials/_footer %>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="/vendors/js/vendor.bundle.base.js"></script>
+  <script src="/vendors/js/vendor.bundle.addons.js"></script>
+ 
+
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="/js/off-canvas.js"></script>
+  <script src="/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="/js/dashboard.js"></script>
+  <!-- End custom js for this page-->
+
+  <% include ./modal/createNewDelegates %>
+
+  <% include ./modal/createNewDelegatesByFile %>
+
+</body>
+
+</html>
