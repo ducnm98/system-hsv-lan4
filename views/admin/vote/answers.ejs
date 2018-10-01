@@ -135,6 +135,7 @@
     let socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('currentQuestion', function (data) {
       currentQuestionId = data.questionId;
+      $('#currentQuestion').text(data.question);
       $('#currentQuestion1').text(data.question);
       $('#totalDelegates').text(data.totalDelegates);
       $('#textNotAnswer').text(data.totalDelegates);
