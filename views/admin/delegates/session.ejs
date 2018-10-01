@@ -72,6 +72,11 @@
                           <%- item.delegates.length %>
                         </td>
                         <td>
+                          <button type="button" class="btn btn-icons btn-rounded btn-outline-warning">
+                            <a href="/attendance/<%- item._id %>">
+                              <i class="fa fa-eye"></i>
+                            </a>
+                          </button>
                           <button type="button" class="btn btn-icons btn-rounded btn-outline-warning" onclick="removeSession('<%- item._id %>')"
                             data-toggle="modal" data-target="#deleteModal">
                             <i class="fa fa-trash-o"></i>
@@ -122,7 +127,7 @@
       $.ajax({
         url: '/admin/delegates/session/' + sessionId,
         method: "DELETE",
-        success: function(result) {
+        success: function (result) {
           location.reload();
         }
       })

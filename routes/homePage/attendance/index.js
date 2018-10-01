@@ -6,8 +6,7 @@ module.exports = router => {
       if (err) return res.render('notFound');
       if (result) {
         return res.render('homePage/attendance', {
-          sessionInfo: result,
-          roles: req.user.roles
+          sessionInfo: result
         })
       } else {
         return res.render('notFound')

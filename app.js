@@ -27,7 +27,7 @@ app.use(cookieParser());
 // Adding cache css, js to improve page load
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '30 days' }));
 app.set('Cache-Control', 'max-age=3000');
-
+app.use('/favicon.ico', express.static('images/favicon.ico'));
 
 // Adding cors to allow some domain
 var whitelist = ["http://localhost:3000"];
