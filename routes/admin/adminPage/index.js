@@ -4,6 +4,7 @@ var { TYPE_OF_ADMIN } = require("../../constants");
 var { checkPermission } = require('../../../services/checkPermission');
 var mongoose = require('mongoose');
 var bcryptjs = require('bcryptjs');
+var { updateNumberOfDelegates, delegatesIn, delegatesOut } = require('../../../services/socket');
 
 
 router.get("/", (req, res, next) => {
@@ -40,6 +41,7 @@ router.get('/test/:id', (req, res) => {
   }
   mongoose.model('attendance').findOneAndUpdate({ _id: req.params.id }, update, {new: true}, (err, result) => {
     if (result) {
+      updateNumberOfDelegates(attendance);
       return res.send(result)
     }
   })
