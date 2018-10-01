@@ -2,36 +2,82 @@
 <html lang="en">
 
 <head>
-  <title>TITLE</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8">
-
-
-  <!-- Font -->
-
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7CPoppins:400,500" rel="stylesheet">
-
-  <!-- Stylesheets -->
-
-  <!-- <link href="/css/comming-soon/bootstrap.css" rel="stylesheet"> -->
-
-  <link href="/css/comming-soon/styles.css" rel="stylesheet">
-
-  <link href="/css/comming-soon/responsive.css" rel="stylesheet">
-
-  <link href="/css/comming-soon/ionicons.css" rel="stylesheet">
-
-
-  <link rel="stylesheet" href="/css/comming-soon/jquery.classycountdown.css" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Điểm danh phiên làm việc</title>
+  <!-- plugins:css -->
   <link rel="stylesheet" href="/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/vendors/iconfonts/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="/vendors/css/vendor.bundle.addons.css">
-  <link rel="shortcut icon" href="/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7CPoppins:400,500" rel="stylesheet">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/images/favicon.png" />
 
 </head>
 
 <body>
+
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+      <div class="content-wrapper d-flex align-items-center auth theme-one" style="background: url('/images/background_no_logo.png'); background-size: cover;">
+
+        <div style="top: 20px; position: absolute; left: 0; right: 0; margin-left: auto; margin-right: auto;">
+          <div class="col-md-3" style="margin: auto">
+            <img src="/images/logo.png" style="width: 80%; ">
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+          <div class="card card-statistics">
+            <div class="card-body">
+              <div class="clearfix">
+                <div class="float-left">
+                  <i class="mdi mdi-cube text-danger icon-lg"></i>
+                </div>
+                <div class="float-right">
+                  <p class="mb-0 text-right">Tổng số đại biểu</p>
+                  <div class="fluid-container">
+                    <h3 class="font-weight-medium text-right mb-0 display-2" id="totalOfDelegates">0</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+          <div class="card card-statistics">
+            <div class="card-body">
+              <div class="clearfix">
+                <div class="float-left">
+                  <i class="mdi mdi-cube text-danger icon-lg"></i>
+                </div>
+                <div class="float-right">
+                  <p class="mb-0 text-right">Tổng số đại biểu</p>
+                  <div class="fluid-container">
+                    <h3 class="font-weight-medium text-right mb-0 display-2">$65,650</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- content-wrapper ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+  </div>
+
 
   <!-- SCIPTS -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>
@@ -43,9 +89,6 @@
     socket.on('totalOfDelegates-<%- sessionInfo._id %>', function (data) {
       $('#totalOfDelegates').text(data.delegates.length)
     })
-  </script>
-  <script>
-    socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('delegatesIn', function (data) {
       console.log(data);
     })
