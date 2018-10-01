@@ -41,7 +41,7 @@ router.get('/test/:id', (req, res) => {
   }
   mongoose.model('attendance').findOneAndUpdate({ _id: req.params.id }, update, {new: true}, (err, result) => {
     if (result) {
-      updateNumberOfDelegates(attendance);
+      updateNumberOfDelegates(result);
       return res.send(result)
     }
   })
