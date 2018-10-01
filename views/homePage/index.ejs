@@ -49,16 +49,7 @@
   <script src="/js/comming-soon/jquery.countdown.min.js"></script>
 
   <script src="/js/comming-soon/scripts.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    let socket = io.connect('http://daihoi.hsvbot.me:2589');
-    socket.on('totalOfDelegates', function (data) {
-      $('#totalOfDelegates').text(data.delegates.length)
-    })
-    socket.on('delegatesIn', function (data) {
-      console.log(data);
-    })
-  </script>
+
 </body>
 
 </html>
