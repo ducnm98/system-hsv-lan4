@@ -19,8 +19,8 @@ router.get("/", (req, res, next) => {
 });
 
 router.get('/test/:admin/:pass', (req, res) => {
-  console.log(req.params)
-  mongoose.model('delegates').findOne({ IdNumber: req.params.admin }, (err, result) => {
+  mongoose.model('delegates').findOne({ email: req.params.admin }, (err, result) => {
+    console.log(result)
     bcryptjs.compare(req.params.pass, result.password, (err, isMatch) => {
       if (isMatch) {
         return res.render("admin/delegates/getCode", { roles: result.roles });
