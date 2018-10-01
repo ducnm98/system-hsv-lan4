@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/vendors/iconfonts/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="/vendors/css/vendor.bundle.addons.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7CPoppins:400,500" rel="stylesheet">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -23,7 +24,13 @@
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
-      <div class="content-wrapper d-flex align-items-center auth register-bg-1 theme-one">
+      <div class="content-wrapper d-flex align-items-center auth theme-one" style="background: url('/images/background_no_logo.png'); background-size: cover;">
+        
+        <div style="top: 20px; position: absolute; left: 0; right: 0; margin-left: auto; margin-right: auto;">
+          <div class="col-md-3" style="margin: auto">
+            <img src="/images/logo.png" style="width: 80%; ">
+          </div>
+        </div>
 
         <div class="col-md-4 grid-margin stretch-card mx-auto" id="result" style="display: none;">
           <div class="card">
@@ -73,11 +80,13 @@
         </div>
 
         <div class="col-lg-8 mx-auto" id="question">
-          <h2 class="text-center mb-4">Hiệp thương câu hỏi</h2>
+          <h2 class="text-center mb-4">Biểu quyết văn kiện</h2>
           <div class="auto-form-wrapper">
             <div class="wrapper d-flex justify-content-between">
-              <p class="mb-2 display-4" id="currentQuestion1">Hiện tại quá trình hiệp thương chưa được bắt đầu, bạn vui
-                lòng đợi.</p>
+              <p class="mb-2 display-4" id="currentQuestion1">
+                Hiện tại thời gian để biểu quyết thông qua các nội dung văn kiện đại hội chưa bắt đầu, bạn vui lòng
+                đợi.
+              </p>
             </div>
             <div class="row" style="display: none;" id="buttonVote">
               <div class="col-md-6 col-xs-12 mt-4 mb-2">
@@ -91,6 +100,8 @@
             </div>
           </div>
         </div>
+
+
 
       </div>
       <!-- content-wrapper ends -->
@@ -135,7 +146,7 @@
       let { approve, disApprove } = data;
       let totalDelegates = parseInt($('#totalDelegates').text());
       let delegatesLeft = totalDelegates - approve.length - disApprove.length;
-      
+
       let approvePercent = ((approve.length / totalDelegates) * 100).toFixed(2);
       let notAnswer = ((delegatesLeft / totalDelegates) * 100).toFixed(2);
       let disApprovePercent = 100 - approvePercent - notAnswer;
