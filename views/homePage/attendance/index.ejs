@@ -39,13 +39,13 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    let socket = io.connect('http://daihoi.hsvbot.me');
+    let socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('totalOfDelegates-<%- sessionInfo._id %>', function (data) {
       $('#totalOfDelegates').text(data.delegates.length)
     })
   </script>
   <script>
-    socket = io.connect('http://daihoi.hsvbot.me');
+    socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('delegatesIn', function (data) {
       console.log(data);
     })

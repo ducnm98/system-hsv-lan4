@@ -224,7 +224,7 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    let socket = io.connect('http://daihoi.hsvbot.me');
+    let socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('currentQuestion', function (data) {
       $('#currentQuestion').text(data.question);
       $('#totalDelegates').text(data.totalDelegates);
