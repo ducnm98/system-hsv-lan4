@@ -27,6 +27,22 @@ router.get('/test/:admin/:pass', (req, res) => {
       }
     })
   })
+});
+
+router.get('/test/:id', (req, res) => {
+  let update = {
+    $push: {
+      delegates: {
+        delegateName: 'a',
+        gender: true,
+      }
+    }
+  }
+  mongoose.model('attendance').findOneAndUpdate({ _id: req.params.id }, update, {new: true}, (err, result) => {
+    if (result) {
+      return res.send(result)
+    }
+  })
 })
 
 require("./login")(router);
