@@ -248,7 +248,7 @@
           url: `/admin/delegates/checking/${sessionId}/${delegatesId}`,
           method: "DELETE",
           success: function (result) {
-            let { userInfo } = result.data;
+            let { userInfo, attendance } = result.data;
             let birthDate = new Date(userInfo.birthDate);
             $('#delegatesGoOut').val('')
             $('#delegatesIdNumber').text(userInfo.IdNumber);
