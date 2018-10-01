@@ -33,7 +33,6 @@ module.exports = passport =>  {
             if (err) throw err;
             if (isMatch) {
               userDoc.password = null;
-              console.log('aas')
               return done(null, userDoc);
             }
             // If password is wrong
