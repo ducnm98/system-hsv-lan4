@@ -52,7 +52,6 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     let socket = io.connect('http://daihoi.hsvbot.me:2589');
-    let socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('totalOfDelegates', function (data) {
       $('#totalOfDelegates').text(data.delegates.length)
     })
