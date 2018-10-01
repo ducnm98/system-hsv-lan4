@@ -9,6 +9,7 @@ var bcrypt = require("bcryptjs");
 var randomString = require('randomstring');
 var { IS_STAFF } = require("../../constants");
 var { checkPermission } = require('../../../services/checkPermission');
+var { createAndSend } = require('../../../services/sendEmail')
 
 module.exports = router => {
   router.post("/create-by-file", StoreFile('documents').any(), (req, res, next) => {
@@ -122,7 +123,8 @@ module.exports = router => {
     if (req.isAuthenticated()) {
       if (checkPermission(req.user.roles, IS_STAFF)) {
         req.files[0].link = req.files[0].destination.substring(6, req.files[0].destination.length) + req.files[0].filename;
-        bcrypt.hash("123", 10, (err, passHash) => {
+        let password = randomString.generate(10);
+        bcrypt.hash(password, 10, (err, passHash) => {
           let insert = {
             ...req.body,
             password: passHash,
@@ -132,6 +134,11 @@ module.exports = router => {
           mongoose.model('delegates').create(insert, (err, result) => {
             if (err) throw err;
             if (result) {
+              let userInfo = {
+                result,
+                password
+              }
+              createAndSend(userInfo);
               createAndSaveBarCode(result._id, result._id);
               createAndSaveQrCode(result._id, result._id);
               return res.redirect('/admin/delegates')
