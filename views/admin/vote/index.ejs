@@ -91,7 +91,7 @@
                             <%- item.disApprove.length %>
                           </td>
                           <td>
-                            <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="joined('<%- item._id %>')">
+                            <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="checkDelegatesJoined('<%- item._id %>')">
                               <i class="fa fa fa-eye"></i>
                             </button>
                             <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="chooseQuestion('<%- item._id %>')"
@@ -229,12 +229,12 @@
     }
   </script>
   <script>
-    function joined(id) {
+    function checkDelegatesJoined(id) {
       $.ajax({
         url: "/admin/votes/connected/" + $('#session').val() + "/" + id,
         method: "GET",
         success: function (result) {
-          $.notify("Đang kiểm tra số lượng đại biểu online", 'success');
+          $.notify("Đang kiểm tra số lượng đại biểu online", 'success')
         }
       })
     }
