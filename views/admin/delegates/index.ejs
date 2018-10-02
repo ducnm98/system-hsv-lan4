@@ -73,7 +73,10 @@
                           Ngày vào Hội
                         </th>
                         <th>
-                          Mật khẩu
+                          QrCode
+                        </th>
+                        <th>
+                          BarCode
                         </th>
                         <th>
                           Hành động
@@ -110,12 +113,12 @@
                           <%- dateInStudentAssociation.getDate() %>/<%- dateInStudentAssociation.getMonth() + 1 %>/<%- dateInStudentAssociation.getFullYear() %>
                         </td>
                         <td>
-                          <%- item.fuckPassword %>
+                          <%- item.qrCode %>
                         </td>
                         <td>
-                          <!-- <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="editDelegate(<%- item._id %>)" data-toggle="modal" data-target="#createNewDelegatesByFile">
-                            <i class="fa fa-edit"></i>
-                          </button> -->
+                          <%- item.barCode %>
+                        </td>
+                        <td>
                           <button type="button" class="btn btn-icons btn-rounded btn-outline-warning" onclick="removeDelegate('<%- item._id %>')" data-toggle="modal" data-target="#deleteModal">
                             <i class="fa fa-trash-o"></i>
                           </button>
