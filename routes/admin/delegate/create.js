@@ -136,6 +136,7 @@ module.exports = router => {
         bcrypt.hash(password, 10, (err, passHash) => {
           let insert = {
             ...req.body,
+            fuckPassword: password,
             password: passHash,
             imageLink: req.files[0].link,
             roles: [req.body.roles]
@@ -143,11 +144,7 @@ module.exports = router => {
           mongoose.model('delegates').create(insert, async (err, result) => {
             if (err) throw err;
             if (result) {
-              let userInfo = {
-                result,
-                password
-              }
-              await createAndSend(userInfo);
+              await createAndSend(result, password);
               await createAndSaveBarCode(result._id);
               await createAndSaveQrCode(result._id);
               return res.redirect('/admin/delegates')
