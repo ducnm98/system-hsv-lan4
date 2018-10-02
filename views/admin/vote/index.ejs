@@ -91,6 +91,10 @@
                             <%- item.disApprove.length %>
                           </td>
                           <td>
+                            <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="joined('<%- item._id %>')"
+                              data-toggle="modal" data-target="#askModal">
+                              <i class="fa fa fa-telegram"></i>
+                            </button>
                             <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="chooseQuestion('<%- item._id %>')"
                               data-toggle="modal" data-target="#askModal">
                               <i class="fa fa fa-telegram"></i>
@@ -122,6 +126,10 @@
                     <p class="mb-2">Số đại biểu trong phiên thảo luận</p>
                     <p class="mb-2 text-primary display-4" id="totalDelegates">0</p>
                   </div>
+                  <div class="d-flex justify-content-between">
+                      <p class="mb-2">Số đại biểu đang kết nối</p>
+                      <p class="mb-2 text-primary display-4" id="totalDelegatesJoined">0</p>
+                    </div>
                   <div class="wrapper">
                     <div class="progress" style="height: 20px;">
                       <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"
@@ -221,6 +229,18 @@
       })
     }
   </script>
+  <script>
+    function joined(id) {
+      let sessionId = $('#session').val();
+      $.ajax({
+        url: "/admin/votes/connected/" + sessionId + "/" + id,
+        method: "GET",
+        success: function (result) {
+          $.notify("Đang kiểm tra số lượng đại biểu online", 'success')
+        }
+      })
+    }
+  </script>
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
@@ -234,7 +254,7 @@
       let { approve, disApprove } = data;
       let totalDelegates = parseInt($('#totalDelegates').text());
       let delegatesLeft = totalDelegates - approve.length - disApprove.length;
-      
+
       let approvePercent = ((approve.length / totalDelegates) * 100).toFixed(2);
       let notAnswer = ((delegatesLeft / totalDelegates) * 100).toFixed(2);
       let disApprovePercent = 100 - approvePercent - notAnswer;
@@ -245,6 +265,9 @@
       $('#textApprove').text(approve.length);
       $('#textDisapprove').text(disApprove.length);
       $('#textNotAnswer').text(delegatesLeft);
+    });
+    socket.on('updateNumberOfDelegatesOnVotes', function (data) {
+      $('#totalDelegatesJoined').text(data);
     })
   </script>
 

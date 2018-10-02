@@ -2,6 +2,19 @@ var mongoose = require("mongoose");
 
 var votes = new mongoose.Schema({
   question: { type: String },
+  numberDelegatesOfSession: { type: Number },
+  delegatesJoined: [
+    {
+      delegatesId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "delegates"
+      },
+      delegateName: {
+        type: String
+      },
+      _id: false
+    }
+  ],
   approve: [
     {
       delegatesId: {
@@ -12,7 +25,7 @@ var votes = new mongoose.Schema({
         type: String
       },
       _id: false
-    },
+    }
   ],
   disApprove: [
     {
@@ -25,7 +38,7 @@ var votes = new mongoose.Schema({
       },
       _id: false
     }
-  ],
+  ]
 });
 
 module.exports = votes;

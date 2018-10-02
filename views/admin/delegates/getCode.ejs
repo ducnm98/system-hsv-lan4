@@ -156,7 +156,6 @@
         method: "GET",
         success: function (result) {
           let userInfo = result.data;
-          console.log(userInfo);
           let birthDate = new Date(userInfo.birthDate);
           $('#findDelegates').val('');
           $('#delegatesIdNumber').text(userInfo.IdNumber);

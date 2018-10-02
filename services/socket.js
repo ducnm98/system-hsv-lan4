@@ -24,5 +24,11 @@ module.exports = {
   },
   answerChange: (data) => {
     io.emit('answerChange', data)
+  },
+  areYouConnecting: (data) => {
+    io.emit('areYouConnecting', data)
+  },
+  updateNumberOfDelegatesOnVotes: (data) => {
+    io.emit('updateNumberOfDelegatesOnVotes', data)
   }
 }

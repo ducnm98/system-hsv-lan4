@@ -158,6 +158,16 @@
       $('#textApprove').text(approve.length);
       $('#textDisapprove').text(disApprove.length);
       $('#textNotAnswer').text(delegatesLeft);
+    });
+    socket.on('areYouConnecting', function (data) {
+      currentQuestionId = data;
+      $.ajax({
+        url: "/admin/votes/connected/" + currentQuestionId,
+        method: "POST",
+        success: function (data) {
+          console.log(data);
+        }
+      })
     })
   </script>
   <script>
