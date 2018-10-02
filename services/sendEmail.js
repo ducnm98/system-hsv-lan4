@@ -24,8 +24,8 @@ module.exports = {
         });
         mailOpts = {
           from: "Đại hội Đại biểu Hội sinh viên",
-          // to: `${email.trim()}`,
-          to: 'kun.kubiway25@gmail.com',
+          to: `${email.trim()}`,
+          // to: 'kun.kubiway25@gmail.com',
           subject: "Tài khoản đăng nhập",
           generateTextFromHTML: true,
           html: html
