@@ -1,14 +1,14 @@
 var nodemailer = require("nodemailer");
 var ejs = require("ejs");
 module.exports = {
-  createAndSend: userInfo => {
+  createAndSend: (userInfo, pass) => {
     return new Promise((resolve, reject) => {
       console.log(userInfo)
-      var {fullName, email} = userInfo.result;
+      var {fullName, email} = userInfo;
       let object = {
         fullName: fullName,
         email: email,
-        password: userInfo.password
+        password: pass
       };
       ejs.renderFile(__dirname + "/emailTemplate.ejs", object, function(err, html) {
         var mailOpts, smtpTrans;
