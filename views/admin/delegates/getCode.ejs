@@ -76,41 +76,53 @@
                       <div class="row mb-3">
                         <label class="col-sm-3">MSSV:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesIdNumber">16520241</h4>
+                          <h4 id="delegatesIdNumber"></h4>
                         </div>
                       </div>
 
                       <div class="row mb-3">
                         <label class="col-sm-3">Họ và tên:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesName">Nguyễn Minh Đức</h4>
+                          <h4 id="delegatesName"></h4>
                         </div>
                       </div>
 
                       <div class="row mb-3">
                         <label class="col-sm-3">Ngày sinh:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesBirthDate">06/11/1998</h4>
+                          <h4 id="delegatesBirthDate"></h4>
                         </div>
 
                       </div>
                       <div class="row mb-3">
                         <label class="col-sm-3">Là đại biểu</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesType">Chính thức</h4>
+                          <h4 id="delegatesType"></h4>
                         </div>
                       </div>
 
                       <div class="row mb-3">
                         <label class="col-sm-3">Khoa:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesFaculty">HTTT</h4>
+                          <h4 id="delegatesFaculty"></h4>
                         </div>
                       </div>
                       <div class="row">
                         <label class="col-sm-3">Lớp:</label>
                         <div class="col-sm-9">
-                          <h4 id="delegatesClass">HTCL2016</h4>
+                          <h4 id="delegatesClass"></h4>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-3">QrCode:</label>
+                        <div class="col-sm-9">
+                          <h4 id="delegatesQrCodeText"></h4>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-3">BarCode:</label>
+                        <div class="col-sm-9">
+                          <h4 id="delegatesBarCodeText"></h4>
                         </div>
                       </div>
                     </div>
@@ -167,6 +179,8 @@
           $('#delegatesImage').attr("src", userInfo.imageLink);
           $('#delegatesBarcode').attr("src", userInfo.barCode);
           $('#delegatesQrcode').attr("src", userInfo.qrCode);
+          $('#delegatesQrCodeText').text(userInfo.qrCode ? userInfo.qrCode : userInfo._id);
+          $('#delegatesBarCodeText').text(userInfo.barCode ? userInfo.barCode : userInfo._id);
           $('#findDelegates').notify("Tìm kiếm hoàn tất", "success");
         },
         error: function (result) {

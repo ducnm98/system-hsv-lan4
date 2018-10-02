@@ -19,12 +19,9 @@ module.exports = router => {
         req.files[0].link = req.files[0].destination + req.files[0].filename;
     
         const schema = {
-          '#': {
+          'password': {
             prop: 'password',
             type: String,
-            parse(value) {
-              return randomString.generate(30);
-            }
           },
           'IdNumber': {
             prop: 'IdNumber',
@@ -101,19 +98,17 @@ module.exports = router => {
           let temp = [];
           if (rows.length > 0) {
             rows.map((item, index) => {
-              item = { ...item, fuckPassword: item.password };
-              temp.push({ email: item.email, pass: item.password })
+              let pass = item.password;
               item.password = bcrypt.hashSync(`${item.password}`, 10);
               mongoose.model('delegates').create(item, async (err, result) => {
                 if (err) console.log(err);
                 if (result) {
-                  await createAndSend(result, result.fuckPassword);
+                  await createAndSend(result, pass);
                   await createAndSaveBarCode(result);
                   await createAndSaveQrCode(result);
                 }
               })
               if (rows.length - index == 1) {
-                Send('ducnm.john98@gmail.com', "Pass", temp);
                 console.log(temp);
                 return success(res, "Done", rows)
               }
@@ -132,11 +127,10 @@ module.exports = router => {
     if (req.isAuthenticated()) {
       if (checkPermission(req.user.roles, IS_STAFF)) {
         req.files[0].link = req.files[0].destination.substring(6, req.files[0].destination.length) + req.files[0].filename;
-        let password = randomString.generate(10);
+        let password = 'thisIsAPassword';
         bcrypt.hash(password, 10, (err, passHash) => {
           let insert = {
             ...req.body,
-            fuckPassword: password,
             password: passHash,
             imageLink: req.files[0].link,
             roles: [req.body.roles]
