@@ -103,7 +103,7 @@ module.exports = router => {
               await mongoose.model('delegates').create(item, async (err, result) => {
                 if (err) console.log(err);
                 if (result) {
-                  await createAndSend(result, pass);
+                  // await createAndSend(result, pass);
                   await createAndSaveBarCode(result);
                   await createAndSaveQrCode(result);
                 }
