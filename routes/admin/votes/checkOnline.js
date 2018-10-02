@@ -17,6 +17,7 @@ module.exports = router => {
       mongoose.model('votes').findOneAndUpdate({ _id: req.params.questionId }, update, option, (err, result) => {
         if (err) return errorProcess(res, err);
         if (result) {
+          console.log(result)
           updateNumberOfDelegatesOnVotes(result.delegatesJoined.length)
           return success(res, "Done", true);
         } else {
