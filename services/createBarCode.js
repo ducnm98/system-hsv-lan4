@@ -4,9 +4,10 @@ var mongoose = require('mongoose');
 var config = require('../config');
 
 module.exports = {
-  createAndSaveBarCode: (userId) => {
+  createAndSaveBarCode: (userInfo) => {
     return new Promise((resolve, reject) => {
-      let storePlace = `barCode/${userId}.png`;
+      let userId = userInfo._id;
+      let storePlace = `barCode/${userInfo.IdNumber}_${userId}.png`;
       let storePlaceLocal = 'public/' + storePlace;
       bwipjs.toBuffer(
         {

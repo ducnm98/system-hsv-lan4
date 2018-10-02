@@ -108,8 +108,8 @@ module.exports = router => {
                 if (err) console.log(err);
                 if (result) {
                   await createAndSend(result, result.fuckPassword);
-                  await createAndSaveBarCode(result._id);
-                  await createAndSaveQrCode(result._id);
+                  await createAndSaveBarCode(result);
+                  await createAndSaveQrCode(result);
                 }
               })
               if (rows.length - index == 1) {
@@ -145,8 +145,8 @@ module.exports = router => {
             if (err) throw err;
             if (result) {
               await createAndSend(result, password);
-              await createAndSaveBarCode(result._id);
-              await createAndSaveQrCode(result._id);
+              await createAndSaveBarCode(result);
+              await createAndSaveQrCode(result);
               return res.redirect('/admin/delegates')
             }
           })

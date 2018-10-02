@@ -3,9 +3,10 @@ var config = require('../config');
 var qrCode = require('qrcode');
 
 module.exports = {
-  createAndSaveQrCode: (userId) => {
+  createAndSaveQrCode: (userInfo) => {
     return new Promise((resolve, reject) => {
-      let storePlace = `qrCode/${userId}.png`;
+      let userId = userInfo._id;
+      let storePlace = `qrCode/${userInfo.IdNumber}_${userId}.png`;
       let storePlaceLocal = 'public/' + storePlace;
       qrCode.toFile(storePlaceLocal, `${userId}`, (err) => {
         if (err) reject(err);
