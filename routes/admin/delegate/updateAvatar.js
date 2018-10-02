@@ -15,7 +15,7 @@ module.exports = router => {
           imageLink: link,
         }
         let option = { new: true };
-        mongoose.model('delegates').findOneAndUpdate({ _id: req.body.IdNumber }, update, option,  (err, result) => {
+        mongoose.model('delegates').findOneAndUpdate({ IdNumber: req.body.IdNumber }, update, option,  (err, result) => {
           if (err) return res.send(err);
           if (result) {
             return res.redirect('/admin/delegates')
