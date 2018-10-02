@@ -252,7 +252,7 @@
     });
     socket.on('answerChange', function (data) {
       let { approve, disApprove } = data;
-      let totalDelegates = parseInt($('#totalDelegates').text());
+      let totalDelegates = parseInt($('#totalDelegatesJoined').text());
       let delegatesLeft = totalDelegates - approve.length - disApprove.length;
 
       let approvePercent = ((approve.length / totalDelegates) * 100).toFixed(2);
