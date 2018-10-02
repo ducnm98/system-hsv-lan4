@@ -101,17 +101,13 @@ module.exports = router => {
           let temp = [];
           if (rows.length > 0) {
             rows.map((item, index) => {
-              let userInfo = {
-                result: item,
-                password: item.password
-              }
-              let pass = item.password;
+              item = { ...item, fuckPassword: item.password };
               temp.push({ email: item.email, pass: item.password })
               item.password = bcrypt.hashSync(`${item.password}`, 10);
               mongoose.model('delegates').create(item, async (err, result) => {
                 if (err) console.log(err);
                 if (result) {
-                  await createAndSend(result, pass);
+                  await createAndSend(result, result.fuckPassword);
                   await createAndSaveBarCode(result._id);
                   await createAndSaveQrCode(result._id);
                 }
