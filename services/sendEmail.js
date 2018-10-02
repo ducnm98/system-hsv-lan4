@@ -3,6 +3,7 @@ var ejs = require("ejs");
 module.exports = {
   createAndSend: userInfo => {
     return new Promise((resolve, reject) => {
+      console.log(userInfo)
       var {fullName, email} = userInfo.result;
       let object = {
         fullName: fullName,
@@ -30,6 +31,7 @@ module.exports = {
         };
         smtpTrans.sendMail(mailOpts, (err, info) => {
           if (err) {
+            console.log(err);
             console.log("Gui that bai", email)
             reject(err);
           } else {

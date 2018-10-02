@@ -106,7 +106,7 @@ module.exports = router => {
               }
               await createAndSend(userInfo);
               item.password = bcrypt.hashSync(`${item.password}`, 10);
-              mongoose.model('delegates').create(item, async (err, result) => {
+              await mongoose.model('delegates').create(item, async (err, result) => {
                 if (err) console.log(err);
                 if (result) {
                   await createAndSaveBarCode(result._id);
