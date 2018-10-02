@@ -99,12 +99,12 @@ module.exports = router => {
         readXlsxFile(fs.createReadStream(req.files[0].link), { schema }).then(({rows, err}) => {
           if (err) return returnToUser.errorProcess(res, err);
           if (rows.length > 0) {
-            rows.map((item, index) => {
+            rows.map(async (item, index) => {
               let userInfo = {
                 result: item,
                 password: item.password
               }
-              createAndSend(userInfo);
+              await createAndSend(userInfo);
               item.password = bcrypt.hashSync(`${item.password}`, 10);
               mongoose.model('delegates').create(item, async (err, result) => {
                 if (err) console.log(err);
