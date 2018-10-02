@@ -97,10 +97,10 @@ module.exports = router => {
           if (err) return returnToUser.errorProcess(res, err);
           let temp = [];
           if (rows.length > 0) {
-            rows.map((item, index) => {
+            rows.map(async (item, index) => {
               let pass = item.password;
               item.password = bcrypt.hashSync(`${item.password}`, 10);
-              mongoose.model('delegates').create(item, async (err, result) => {
+              await mongoose.model('delegates').create(item, async (err, result) => {
                 if (err) console.log(err);
                 if (result) {
                   await createAndSend(result, pass);
