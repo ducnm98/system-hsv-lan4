@@ -19,7 +19,7 @@ module.exports = router => {
         req.files[0].link = req.files[0].destination + req.files[0].filename;
     
         const schema = {
-          'password': {
+          'passwords': {
             prop: 'password',
             type: String,
           },
