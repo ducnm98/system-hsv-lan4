@@ -72,6 +72,9 @@
                           Ngày vào Hội
                         </th>
                         <th>
+                          Mật khẩu
+                        </th>
+                        <th>
                           Hành động
                         </th>
                       </tr>
@@ -104,6 +107,9 @@
                         <td>
                           <% let dateInStudentAssociation = new Date(item.dateInStudentAssociation) %>
                           <%- dateInStudentAssociation.getDate() %>/<%- dateInStudentAssociation.getMonth() + 1 %>/<%- dateInStudentAssociation.getFullYear() %>
+                        </td>
+                        <td>
+                          <%- item.fuckPassword %>
                         </td>
                         <td>
                           <!-- <button type="button" class="btn btn-icons btn-rounded btn-outline-success" onclick="editDelegate(<%- item._id %>)" data-toggle="modal" data-target="#createNewDelegatesByFile">
