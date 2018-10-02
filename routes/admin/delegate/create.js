@@ -9,7 +9,8 @@ var bcrypt = require("bcryptjs");
 var randomString = require('randomstring');
 var { IS_STAFF } = require("../../constants");
 var { checkPermission } = require('../../../services/checkPermission');
-var { createAndSend } = require('../../../services/sendEmail')
+var { createAndSend } = require('../../../services/sendEmail');
+var { domain } = require('../../../config')
 
 module.exports = router => {
   router.post("/create-by-file", StoreFile('documents').any(), (req, res, next) => {
@@ -95,20 +96,27 @@ module.exports = router => {
             type: String,
           },
         };
-        readXlsxFile(fs.createReadStream(req.files[0].link), { schema }).then(async ({rows, err}) => {
+        readXlsxFile(fs.createReadStream(req.files[0].link), { schema }).then(({rows, err}) => {
           if (err) return returnToUser.errorProcess(res, err);
           if (rows.length > 0) {
-            await rows.map((item, index) => {
-              console.log(item.password);
-              item.password = bcrypt.hashSync(`item.password`, 10);
+            rows.map((item, index) => {
+              let userInfo = {
+                result: item,
+                password: item.password
+              }
+              createAndSend(userInfo);
+              item.password = bcrypt.hashSync(`${item.password}`, 10);
               mongoose.model('delegates').create(item, async (err, result) => {
+                if (err) console.log(err);
                 if (result) {
                   await createAndSaveBarCode(result._id);
                   await createAndSaveQrCode(result._id);
                 }
               })
+              if (rows.length - index == 1) {
+                return success(res, "Done", rows)
+              }
             })
-            return success(res, "Done", rows)
           }
         })
       } else {
@@ -131,16 +139,16 @@ module.exports = router => {
             imageLink: req.files[0].link,
             roles: [req.body.roles]
           }
-          mongoose.model('delegates').create(insert, (err, result) => {
+          mongoose.model('delegates').create(insert, async (err, result) => {
             if (err) throw err;
             if (result) {
               let userInfo = {
                 result,
                 password
               }
-              createAndSend(userInfo);
-              createAndSaveBarCode(result._id, result._id);
-              createAndSaveQrCode(result._id, result._id);
+              await createAndSend(userInfo);
+              await createAndSaveBarCode(result._id);
+              await createAndSaveQrCode(result._id);
               return res.redirect('/admin/delegates')
             }
           })

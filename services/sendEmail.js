@@ -2,39 +2,43 @@ var nodemailer = require("nodemailer");
 var ejs = require("ejs");
 module.exports = {
   createAndSend: userInfo => {
-    var {fullName, email} = userInfo.result;
-    let object = {
-      fullName: fullName,
-      email: email,
-      password: userInfo.password
-    };
-    ejs.renderFile(__dirname + "/emailTemplate.ejs", object, function(err, html) {
-      var mailOpts, smtpTrans;
-      smtpTrans = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        SMTPAuth: true,
-        SMTPSecure: "tls",
-        auth: {
-          user: "laptrinhwebuit@gmail.com",
-          pass: "uwowazzancsgushs"
-        }
-      });
-      mailOpts = {
-        from: "Đại hội Đại biểu Hội sinh viên",
-        to: email,
-        subject: "Tài khoản đăng nhập",
-        generateTextFromHTML: true,
-        html: html
+    return new Promise((resolve, reject) => {
+      var {fullName, email} = userInfo.result;
+      let object = {
+        fullName: fullName,
+        email: email,
+        password: userInfo.password
       };
-      smtpTrans.sendMail(mailOpts, (err, info) => {
-        if (err) {
-          console.log("Gui that bai");
-        } else {
-          console.log("Gui thanh cong");
-        }
+      ejs.renderFile(__dirname + "/emailTemplate.ejs", object, function(err, html) {
+        var mailOpts, smtpTrans;
+        smtpTrans = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 587,
+          SMTPAuth: true,
+          SMTPSecure: "tls",
+          auth: {
+            user: "laptrinhwebuit@gmail.com",
+            pass: "uwowazzancsgushs"
+          }
+        });
+        mailOpts = {
+          from: "Đại hội Đại biểu Hội sinh viên",
+          to: email,
+          subject: "Tài khoản đăng nhập",
+          generateTextFromHTML: true,
+          html: html
+        };
+        smtpTrans.sendMail(mailOpts, (err, info) => {
+          if (err) {
+            console.log("Gui that bai", email)
+            reject(err);
+          } else {
+            console.log("Gui thanh cong", email);
+            resolve(true);
+          }
+        });
       });
-    });
+    })
   },
 
   Send: function(sendTo, subject, content) {
