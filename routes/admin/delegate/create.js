@@ -95,7 +95,6 @@ module.exports = router => {
         };
         readXlsxFile(fs.createReadStream(req.files[0].link), { schema }).then(({rows, err}) => {
           if (err) return returnToUser.errorProcess(res, err);
-          let temp = [];
           if (rows.length > 0) {
             rows.map(async (item, index) => {
               let pass = item.password;
@@ -106,12 +105,11 @@ module.exports = router => {
                   // await createAndSend(result, pass);
                   await createAndSaveBarCode(result);
                   await createAndSaveQrCode(result);
+                  if (rows.length - index == 1) {
+                    return success(res, "Done", rows)
+                  }
                 }
               })
-              if (rows.length - index == 1) {
-                console.log(temp);
-                return success(res, "Done", rows)
-              }
             })
           }
         })
