@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/vendors/iconfonts/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="/vendors/css/vendor.bundle.addons.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -44,7 +45,7 @@
                   </div>
                 </div>
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered">
+                  <table class="table table-striped table-bordered" id="table_id">
                     <thead>
                       <tr>
                         <th>
@@ -142,7 +143,7 @@
   <!-- plugins:js -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>
   <script src="/vendors/js/vendor.bundle.addons.js"></script>
-
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
   <!-- endinject -->
   <!-- Plugin js for this page-->
@@ -179,6 +180,12 @@
         }
       })
     }
+  </script>
+  <script>
+  $(document).ready( function () {
+    $('#table_id').DataTable();
+  });
+
   </script>
 </body>
 
