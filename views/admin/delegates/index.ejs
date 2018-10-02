@@ -113,10 +113,10 @@
                           <%- dateInStudentAssociation.getDate() %>/<%- dateInStudentAssociation.getMonth() + 1 %>/<%- dateInStudentAssociation.getFullYear() %>
                         </td>
                         <td>
-                          <%- item.qrCode %>
+                          <img src="<%- item.qrCode %>">
                         </td>
                         <td>
-                          <%- item.barCode %>
+                          <img src="<%- item.barCode %>">
                         </td>
                         <td>
                           <button type="button" class="btn btn-icons btn-rounded btn-outline-warning" onclick="removeDelegate('<%- item._id %>')" data-toggle="modal" data-target="#deleteModal">
