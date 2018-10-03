@@ -96,12 +96,12 @@
             <div class="wrapper">
               <div class="progress" style="height: 40px;">
                 <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"
-                  style="width: <%- ((sessionInfo.delegates.length / 137) * 100).toFixed(2) %>%" id="process"></div>
+                  style="width: <%- ((sessionInfo.delegates.length / 137) * 100).toFixed(2) %>%" id="process"><%- ((sessionInfo.delegates.length / 137) * 100).toFixed(2) %></div>
               </div>
             </div>
           </div>
           <div class="col-md-12 mt-3">
-            <h1 class="display-3" style="text-align: center;"><%- sessionInfo.delegates.length > 91 ? 'ĐẠI HỘI ĐƯỢC PHÉP TIẾN HÀNH' : 'ĐẠI HỘI KHÔNG ĐƯỢC PHÉP TIẾN HÀNH' %></h1>
+            <h1 class="display-3" style="text-align: center;" id="textAllow"><%- sessionInfo.delegates.length > 91 ? 'ĐẠI HỘI ĐƯỢC PHÉP TIẾN HÀNH' : 'ĐẠI HỘI KHÔNG ĐƯỢC PHÉP TIẾN HÀNH' %></h1>
           </div>
         </div>
 
@@ -130,6 +130,8 @@
       $('#totalOfDelegates').text(data.delegates.length);
       $('#totalOfDelegatesAbsent').text(137 - data.delegates.length);
       $('#process').width(`${process}%`);
+      $('#process').text(process);
+      $('#textAllow').text(data.delegates.length > 91 ? 'ĐAI HỘI ĐƯỢC PHÉP TIẾN HÀNH' : "ĐẠI HỘI KHÔNG ĐƯỢC PHÉP TIẾN HÀNH");
       
     })
     socket.on('delegatesIn', function (data) {
