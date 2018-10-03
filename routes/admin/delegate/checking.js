@@ -39,6 +39,10 @@ module.exports = router => {
                   delegateId: userInfo._id,
                   delegateName: userInfo.fullName,
                   gender: userInfo.gender,
+                  IdNumber: userInfo.IdNumber,
+                  religion: userInfo.religion,
+                  nation: userInfo.nation,
+                  birthDate: userInfo.birthDate
                 }
               }
             }
@@ -77,6 +81,10 @@ module.exports = router => {
                   delegateId: userInfo._id,
                   delegateName: userInfo.fullName,
                   gender: userInfo.gender,
+                  IdNumber: userInfo.IdNumber,
+                  religion: userInfo.religion,
+                  nation: userInfo.nation,
+                  birthDate: userInfo.birthDate
                 }
               }
             }

@@ -34,40 +34,74 @@
           </div>
         </div>
 
-        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-          <div class="card card-statistics">
-            <div class="card-body">
-              <div class="clearfix">
-                <div class="float-left">
-                  <i class="mdi mdi-cube text-danger icon-lg"></i>
-                </div>
-                <div class="float-right">
-                  <p class="mb-0 text-right">Tổng số đại biểu</p>
-                  <div class="fluid-container">
-                    <h3 class="font-weight-medium text-right mb-0 display-2" id="totalOfDelegates">0</h3>
+        <div>
+
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+              <div class="card-body">
+                <div class="clearfix">
+                  <div class="float-left">
+                    <i class="mdi mdi-cube text-danger icon-lg"></i>
+                  </div>
+                  <div class="float-right">
+                    <p class="mb-0 text-right">Tổng số đại biểu được triệu tập</p>
+                    <div class="fluid-container">
+                      <h3 class="font-weight-medium text-right mb-0 display-2" id="delegatesSummon">137</h3>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-          <div class="card card-statistics">
-            <div class="card-body">
-              <div class="clearfix">
-                <div class="float-left">
-                  <i class="mdi mdi-cube text-danger icon-lg"></i>
-                </div>
-                <div class="float-right">
-                  <p class="mb-0 text-right">Tổng số đại biểu</p>
-                  <div class="fluid-container">
-                    <h3 class="font-weight-medium text-right mb-0 display-2">$65,650</h3>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+              <div class="card-body">
+                <div class="clearfix">
+                  <div class="float-left">
+                    <i class="mdi mdi-cube text-danger icon-lg"></i>
+                  </div>
+                  <div class="float-right">
+                    <p class="mb-0 text-right">Tổng số đại biểu đã đến</p>
+                    <div class="fluid-container">
+                      <h3 class="font-weight-medium text-right mb-0 display-2" id="totalOfDelegates">
+                        <%- sessionInfo.delegates.length %>
+                      </h3>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
+            <div class="card card-statistics">
+              <div class="card-body">
+                <div class="clearfix">
+                  <div class="float-left">
+                    <i class="mdi mdi-cube text-danger icon-lg"></i>
+                  </div>
+                  <div class="float-right">
+                    <p class="mb-0 text-right">Tổng số đại biểu vắng mặt</p>
+                    <div class="fluid-container">
+                      <h3 class="font-weight-medium text-right mb-0 display-2" id="totalOfDelegatesAbsent">
+                        <%- 137 - sessionInfo.delegates.length %>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="wrapper">
+              <div class="progress" style="height: 40px;">
+                <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"
+                  style="width: <%- ((sessionInfo.delegates.length / 137) * 100).toFixed(2) %>%" id="process"></div>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -87,7 +121,13 @@
   <script>
     let socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('totalOfDelegates-<%- sessionInfo._id %>', function (data) {
-      $('#totalOfDelegates').text(data.delegates.length)
+      
+      let process = ((data.delegates.length / 137) * 100).toFixed(2);
+
+      $('#totalOfDelegates').text(data.delegates.length);
+      $('#totalOfDelegatesAbsent').text(137 - data.delegates.length);
+      $('#process').width(`${process}%`);
+      
     })
     socket.on('delegatesIn', function (data) {
       console.log(data);

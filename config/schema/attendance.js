@@ -8,12 +8,18 @@ var attendance = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "delegates"
       },
+      IdNumber: { 
+        type: String
+      },
       delegateName: {
         type: String
       },
       gender: {
         type: Boolean
       },
+      religion: { type: String },
+      nation: { type: String },
+      birthDate: { type: Date },
       createdTime: {
         type: Date,
         default: new Date()
