@@ -24,6 +24,8 @@ var delegates = new mongoose.Schema({
   politic: { type: String },
   isALeaderYouth: { type: Boolean },
   isALeaderAssocial: { type: Boolean },
+  partyMembers: { type: Boolean }
+
 });
 
 module.exports = delegates;

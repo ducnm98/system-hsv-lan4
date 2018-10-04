@@ -10,7 +10,7 @@ module.exports = router => {
       if (checkPermission(req.user.roles, IS_STAFF)) {
 
         req.files[0].link = req.files[0].destination.substring(6, req.files[0].destination.length) + req.files[0].filename;
-        let link = domain + '/' + req.files[0].link;
+        let link = domain + req.files[0].link;
         let update = {
           imageLink: link,
         }

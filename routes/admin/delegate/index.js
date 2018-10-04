@@ -7,5 +7,6 @@ require('./create')(router);
 require('./list')(router);
 require('./delete')(router);
 require('./updateAvatar')(router);
+require('./updateInfo')(router);
 
 module.exports = router
