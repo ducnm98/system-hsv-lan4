@@ -20,6 +20,10 @@ var delegates = new mongoose.Schema({
   roles: [{ type: String, enum: TYPE_OF_USERS }],
   barCode: { type: String },
   qrCode: { type: String },
+  numberOfYear: { type: String },
+  politic: { type: String },
+  isALeaderYouth: { type: Boolean },
+  isALeaderAssocial: { type: Boolean },
 });
 
 module.exports = delegates;
