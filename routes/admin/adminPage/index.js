@@ -8,7 +8,7 @@ router.get("/", (req, res, next) => {
     if (checkPermission(req.user.roles, TYPE_OF_ADMIN)) {
       return res.redirect('/admin/delegates/checking')
     } else {
-      return res.redirect('/admin/votes/update-info')
+      return res.redirect('/admin/delegates/update-info')
     }
   } else {
     return redirectToLogin(res);
