@@ -168,8 +168,9 @@
           console.log(data);
         }
       })
-    })
+    });
     socket.on('updateNumberOfDelegatesOnVotes', function (data) {
+      console.log(data)
       $('#totalDelegates').text(data);
     });
   </script>
