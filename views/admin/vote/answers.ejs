@@ -169,6 +169,9 @@
         }
       })
     })
+    socket.on('updateNumberOfDelegatesOnVotes', function (data) {
+      $('#totalDelegates').text(data);
+    });
   </script>
   <script>
     function approve() {
