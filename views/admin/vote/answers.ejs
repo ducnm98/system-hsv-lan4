@@ -177,8 +177,6 @@
         url: '/admin/votes/question/' + currentQuestionId + '/approve',
         method: 'POST',
         success: function (data) {
-          $('#question').hide();
-          $('#result').show();
           $.ajax({
             url: "/admin/votes/next-question",
             method: "GET",
@@ -211,8 +209,6 @@
         url: '/admin/votes/question/' + currentQuestionId + '/disapprove',
         method: 'POST',
         success: function (data) {
-          $('#question').hide();
-          $('#result').show();
           $.ajax({
             url: "/admin/votes/next-question",
             method: "GET",
