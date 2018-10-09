@@ -3,6 +3,10 @@ var mongoose = require("mongoose");
 var votes = new mongoose.Schema({
   question: { type: String },
   numberDelegatesOfSession: { type: Number },
+  withSession: {
+    type: Boolean,
+    default: false
+  },
   delegatesJoined: [
     {
       delegatesId: {

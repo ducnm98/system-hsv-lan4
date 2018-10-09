@@ -1,0 +1,30 @@
+<div class="modal fade" id="createTime" tabindex="-1" role="dialog" aria-labelledby="createTime" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thời gian bắt đầu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Tên câu hỏi</label>
+              <input type="datetime-local" id="open" name="open" />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Tên câu hỏi</label>
+              <input type="datetime-local" id="close" name="close" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="createTime()" data-dismiss="modal">Đồng ý</button>
+      </div>
+    </div>
+  </div>
+</div>

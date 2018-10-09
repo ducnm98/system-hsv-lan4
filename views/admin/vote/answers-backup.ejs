@@ -25,7 +25,7 @@
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
       <div class="content-wrapper d-flex align-items-center auth theme-one" style="background: url('/images/background_no_logo.png'); background-size: cover;">
-
+        
         <div style="top: 20px; position: absolute; left: 0; right: 0; margin-left: auto; margin-right: auto;">
           <div class="col-md-3" style="margin: auto">
             <img src="/images/logo.png" style="width: 80%; ">
@@ -127,49 +127,52 @@
   <script src="/js/notify.min.js"></script>
   <!-- End custom js for this page-->
 
+  <script src="/socket.io/socket.io.js"></script>
   <script>
     var currentQuestionId;
-    var isOpen = false;
   </script>
-
   <script>
-    $(document).ready(function () {
-      setInterval(function () {
-        if (!isOpen) {
-          $.ajax({
-            url: '/admin/votes/isOpen',
-            method: "GET",
-            success: function (result) {
-              isOpen = result.data
-              if (isOpen) {
-                $.ajax({
-                  url: "/admin/votes/next-question",
-                  method: "GET",
-                  success: function (result) {
-                    let data = result.data;
-                    if (data.length > 0) {
-                      currentQuestionId = data[0]._id;
-                      $('#currentQuestion').text(data[0].question);
-                      $('#currentQuestion1').text(data[0].question);
-                      $('#totalDelegates').text(data[0].totalDelegates);
-                      $('#textNotAnswer').text(data[0].totalDelegates);
-                      $('#buttonVote').show();
-                      $('#question').show();
-                      $('#result').hide();
-                    } else {
-                      $('#question').show();
-                      $('#result').hide();
-                      $('#buttonVote').hide();
-                      $('#currentQuestion1').text("Hiện tại, các văn kiện Đại hội đều được bạn thông qua");
-                    }
-                  }
-                })
-              }
-            }
-          })
+    let socket = io.connect('http://daihoi.hsvbot.me:2589');
+    socket.on('currentQuestion', function (data) {
+      currentQuestionId = data.questionId;
+      $('#currentQuestion').text(data.question);
+      $('#currentQuestion1').text(data.question);
+      // $('#totalDelegates').text(data.totalDelegates);
+      $('#textNotAnswer').text(data.totalDelegates);
+      $('#buttonVote').show();
+      $('#question').show();
+      $('#result').hide();
+    });
+    socket.on('answerChange', function (data) {
+      let { approve, disApprove } = data;
+      let totalDelegates = parseInt($('#totalDelegates').text());
+      let delegatesLeft = totalDelegates - approve.length - disApprove.length;
+
+      let approvePercent = ((approve.length / totalDelegates) * 100).toFixed(2);
+      let notAnswer = ((delegatesLeft / totalDelegates) * 100).toFixed(2);
+      let disApprovePercent = 100 - approvePercent - notAnswer;
+
+      $('#processApprove').width(`${approvePercent}%`);
+      $('#processDisapprove').width(`${disApprovePercent}%`);
+      $('#processNotAnswer').width(`${notAnswer}%`);
+      $('#textApprove').text(approve.length);
+      $('#textDisapprove').text(disApprove.length);
+      $('#textNotAnswer').text(delegatesLeft);
+    });
+    socket.on('areYouConnecting', function (data) {
+      currentQuestionId = data;
+      $.ajax({
+        url: "/admin/votes/connected/" + currentQuestionId,
+        method: "POST",
+        success: function (data) {
+          console.log(data);
         }
-      }, 5000)
-    })
+      })
+    });
+    socket.on('updateNumberOfDelegatesOnVotes', function (data) {
+      console.log(data)
+      $('#totalDelegates').text(data);
+    });
   </script>
   <script>
     function approve() {
@@ -179,28 +182,6 @@
         success: function (data) {
           $('#question').hide();
           $('#result').show();
-          $.ajax({
-            url: "/admin/votes/next-question",
-            method: "GET",
-            success: function (result) {
-              let data = result.data;
-              if (data.length > 0) {
-                currentQuestionId = data[0]._id;
-                $('#currentQuestion').text(data[0].question);
-                $('#currentQuestion1').text(data[0].question);
-                $('#totalDelegates').text(data[0].totalDelegates);
-                $('#textNotAnswer').text(data[0].totalDelegates);
-                $('#buttonVote').show();
-                $('#question').show();
-                $('#result').hide();
-              } else {
-                $('#question').show();
-                $('#result').hide();
-                $('#buttonVote').hide();
-                $('#currentQuestion1').text("Hiện tại, các văn kiện Đại hội đều được bạn thông qua");
-              }
-            }
-          })
         }
       })
     }
@@ -213,28 +194,6 @@
         success: function (data) {
           $('#question').hide();
           $('#result').show();
-          $.ajax({
-            url: "/admin/votes/next-question",
-            method: "GET",
-            success: function (result) {
-              let data = result.data;
-              if (data.length > 0) {
-                currentQuestionId = data[0]._id;
-                $('#currentQuestion').text(data[0].question);
-                $('#currentQuestion1').text(data[0].question);
-                $('#totalDelegates').text(data[0].totalDelegates);
-                $('#textNotAnswer').text(data[0].totalDelegates);
-                $('#buttonVote').show();
-                $('#question').show();
-                $('#result').hide();
-              } else {
-                $('#question').show();
-                $('#result').hide();
-                $('#buttonVote').hide();
-                $('#currentQuestion1').text("Hiện tại, các văn kiện Đại hội đều được bạn thông qua");
-              }
-            }
-          })
         }
       })
     }

@@ -36,7 +36,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-4">
-                      <h4 class="card-title">Danh sách các Đại biểu</h4>
+                      <h4 class="card-title">Danh sách các Câu hỏi</h4>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
@@ -52,6 +52,7 @@
                     <div class="col-md-4 text-right">
                       <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createQuestion">Thêm
                         mới</button>
+                      <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createTime">Thời gian</button>
                     </div>
                   </div>
                   <div class="table-responsive">
@@ -126,9 +127,9 @@
                     <p class="mb-2 text-primary display-4" id="totalDelegates">0</p>
                   </div>
                   <div class="d-flex justify-content-between">
-                      <p class="mb-2">Số đại biểu đang kết nối</p>
-                      <p class="mb-2 text-primary display-4" id="totalDelegatesJoined">0</p>
-                    </div>
+                    <p class="mb-2">Số đại biểu đang kết nối</p>
+                    <p class="mb-2 text-primary display-4" id="totalDelegatesJoined">0</p>
+                  </div>
                   <div class="wrapper">
                     <div class="progress" style="height: 20px;">
                       <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"
@@ -197,7 +198,22 @@
   <% include ./modal/deleteQuestion %>
   <% include ./modal/createQuestion %>
   <% include ./modal/askThisQuestion %>
-
+  <% include ./modal/time %>
+  <script>
+    function createTime() {
+      $.ajax({
+        url: "/admin/votes/time",
+        method: "POST",
+        data: {
+          open: $("#open").val(),
+          close: $("#close").val()
+        },
+        success: function (result) {
+          console.log(result)
+        }
+      })
+    }
+  </script>
   <script>
     var questionId;
     function chooseQuestion(id) {
