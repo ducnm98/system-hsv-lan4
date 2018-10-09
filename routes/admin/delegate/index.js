@@ -8,5 +8,6 @@ require('./list')(router);
 require('./delete')(router);
 require('./updateAvatar')(router);
 require('./updateInfo')(router);
+require('./changePassword')(router);
 
 module.exports = router

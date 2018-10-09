@@ -126,7 +126,7 @@ module.exports = router => {
       if (checkPermission(req.user.roles, IS_STAFF)) {
         req.files[0].link = req.files[0].destination.substring(6, req.files[0].destination.length) + req.files[0].filename;
         let password = 'thisIsAPassword';
-        bcrypt.hash(password, 10, (err, passHash) => {
+        bcrypt.hash(req.body.password, 10, (err, passHash) => {
           let insert = {
             ...req.body,
             password: passHash,
@@ -136,7 +136,7 @@ module.exports = router => {
           mongoose.model('delegates').create(insert, async (err, result) => {
             if (err) throw err;
             if (result) {
-              await createAndSend(result, password);
+              // await createAndSend(result, password);
               await createAndSaveBarCode(result);
               await createAndSaveQrCode(result);
               return res.redirect('/admin/delegates')

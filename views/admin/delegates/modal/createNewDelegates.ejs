@@ -14,8 +14,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="name">Mã số Sinh viên</label>
-                <input type="text" class="form-control" name="IdNumber" aria-describedby="IdNumber" id="IdNumber" placeholder="Mã số sinh viên"
-                  required>
+                <input type="text" class="form-control" name="IdNumber" aria-describedby="IdNumber" id="IdNumber"
+                  placeholder="Mã số sinh viên" required>
               </div>
             </div>
             <div class="col-md-6">
@@ -116,6 +116,12 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
+                <label for="name">Mật khẩu</label>
+                <input type="text" class="form-control-file" name="password" id="exampleFormControlFile1" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
                 <label for="name">Quyền hạn</label>
                 <select class="form-control" id="typeOfDocuments" name="roles">
                   <option value="">KHÔNG CÓ</option>
@@ -138,12 +144,12 @@
 </div>
 
 <script>
-  $('#IdNumber').blur(function() {
+  $('#IdNumber').blur(function () {
     let IdNumber = $('#IdNumber').val();
     $.ajax({
       url: '/admin/delegates/create/' + IdNumber,
       method: 'GET',
-      success: function(result) {
+      success: function (result) {
         if (result.data) {
           $('#IdNumber').notify("Mã số sinh viên này đã tồn tại", "danger");
           $('#submit').prop('disabled', true);
