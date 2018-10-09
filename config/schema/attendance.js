@@ -20,6 +20,11 @@ var attendance = new mongoose.Schema({
       religion: { type: String },
       nation: { type: String },
       birthDate: { type: Date },
+      numberOfYear: { type: String },
+      politic: { type: String },
+      isALeaderYouth: { type: Boolean },
+      isALeaderAssociation: { type: Boolean },
+      partyMembers: { type: Boolean },
       createdTime: {
         type: Date,
         default: new Date()

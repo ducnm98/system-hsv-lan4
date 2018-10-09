@@ -9,5 +9,6 @@ require('./delete')(router);
 require('./updateAvatar')(router);
 require('./updateInfo')(router);
 require('./changePassword')(router);
+require('./updateType')(router);
 
 module.exports = router

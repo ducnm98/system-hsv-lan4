@@ -23,7 +23,7 @@ var delegates = new mongoose.Schema({
   numberOfYear: { type: String },
   politic: { type: String },
   isALeaderYouth: { type: Boolean },
-  isALeaderAssocial: { type: Boolean },
+  isALeaderAssociation: { type: Boolean },
   partyMembers: { type: Boolean }
 
 });

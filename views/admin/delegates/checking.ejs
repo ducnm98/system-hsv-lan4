@@ -43,7 +43,7 @@
                         <div class="float-right">
                           <p class="mb-0 text-right">Tổng số đại biểu</p>
                           <div class="fluid-container">
-                            <h3 class="font-weight-medium text-right mb-0" id="totalOfDelegates">137</h3>
+                            <h3 class="font-weight-medium text-right mb-0" id="totalOfDelegates">138</h3>
                           </div>
                         </div>
                       </div>
@@ -229,7 +229,7 @@
             $('#delegatesClass').text(userInfo.class);
             $('#delegatesImage').attr("src", userInfo.imageLink);
             $('#attendatedDelegates').text(attendance.delegates.length);
-            $('#absentedDelegate').text(137 - attendance.delegates.length);
+            $('#absentedDelegate').text(138 - attendance.delegates.length);
             $('#delegatesComing').notify("Điểm danh đại biểu thành công", "success");
           },
           error: function (result) {
@@ -260,7 +260,7 @@
             $('#delegatesClass').text(userInfo.class);
             $('#delegatesImage').attr("src", userInfo.imageLink);
             $('#attendatedDelegates').text(attendance.delegates.length);
-            $('#absentedDelegate').text(137 - attendance.delegates.length);
+            $('#absentedDelegate').text(138 - attendance.delegates.length);
             $('#delegatesGoOut').notify("Xác nhận đại biểu rời khỏi hội trường thành công", "success");
           },
           error: function (result) {

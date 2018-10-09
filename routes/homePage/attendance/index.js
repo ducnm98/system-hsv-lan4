@@ -37,11 +37,75 @@ module.exports = router => {
           }
         }
       ]);
-      console.log(religionGroup, genderGroup)
+      let isALeaderYouth = await mongoose.model("attendance").aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          }
+        },
+        { $unwind: "$delegates" },
+        { $unwind: "$delegates.isALeaderYouth" },
+        {
+          $group: {
+            _id: "$delegates.isALeaderYouth",
+            num: { $sum: 1 }
+          }
+        }
+      ]);
+      let isALeaderAssociation = await mongoose.model("attendance").aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          }
+        },
+        { $unwind: "$delegates" },
+        { $unwind: "$delegates.isALeaderAssociation" },
+        {
+          $group: {
+            _id: "$delegates.isALeaderAssociation",
+            num: { $sum: 1 }
+          }
+        }
+      ]);
+      let partyMembers = await mongoose.model("attendance").aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          }
+        },
+        { $unwind: "$delegates" },
+        { $unwind: "$delegates.partyMembers" },
+        {
+          $group: {
+            _id: "$delegates.partyMembers",
+            num: { $sum: 1 }
+          }
+        }
+      ]);
+      let politic = await mongoose.model("attendance").aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          }
+        },
+        { $unwind: "$delegates" },
+        { $unwind: "$delegates.politic" },
+        {
+          $group: {
+            _id: "$delegates.politic",
+            num: { $sum: 1 }
+          }
+        }
+      ]);
+      console.log(religionGroup, genderGroup, isALeaderYouth, isALeaderAssociation, politic, partyMembers)
       return res.render("homePage/attendance", {
         sessionInfo,
         religionGroup,
-        genderGroup
+        genderGroup,
+        isALeaderYouth,
+        isALeaderAssociation,
+        politic,
+        partyMembers
       });
     } catch (err) {
       console.log(err);

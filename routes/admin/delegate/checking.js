@@ -42,7 +42,12 @@ module.exports = router => {
                   IdNumber: userInfo.IdNumber,
                   religion: userInfo.religion,
                   nation: userInfo.nation,
-                  birthDate: userInfo.birthDate
+                  birthDate: userInfo.birthDate,
+                  numberOfYear: userInfo.numberOfYear,
+                  politic: userInfo.politic,
+                  isALeaderYouth: userInfo.isALeaderYouth,
+                  isALeaderAssociation: userInfo.isALeaderAssociation,
+                  partyMembers: userInfo.partyMembers
                 }
               }
             }
@@ -84,7 +89,12 @@ module.exports = router => {
                   IdNumber: userInfo.IdNumber,
                   religion: userInfo.religion,
                   nation: userInfo.nation,
-                  birthDate: userInfo.birthDate
+                  birthDate: userInfo.birthDate,
+                  numberOfYear: userInfo.numberOfYear,
+                  politic: userInfo.politic,
+                  isALeaderYouth: userInfo.isALeaderYouth,
+                  isALeaderAssociation: userInfo.isALeaderAssociation,
+                  partyMembers: userInfo.partyMembers
                 }
               }
             }
