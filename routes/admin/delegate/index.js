@@ -10,5 +10,6 @@ require('./updateAvatar')(router);
 require('./updateInfo')(router);
 require('./changePassword')(router);
 require('./updateType')(router);
+require('./edit')(router);
 
 module.exports = router

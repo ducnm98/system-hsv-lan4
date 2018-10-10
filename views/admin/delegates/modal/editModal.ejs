@@ -1,0 +1,149 @@
+<div class="modal fade bd-example-modal-lg" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sủa thông tin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/admin/delegates/edit">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Mã số Sinh viên</label>
+                <input type="text" class="form-control" name="IdNumber" aria-describedby="IdNumber" id="IdNumberEdit"
+                  placeholder="Mã số sinh viên" required>
+                <input type="text" name="id" id="idEdit" hidden>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Họ và tên</label>
+                <input type="text" class="form-control" name="fullName" id="fullNameEdit" aria-describedby="fullName" placeholder="Họ và tên"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Địa chỉ email</label>
+                <input type="email" class="form-control" name="email" id="emailEdit" aria-describedby="email" placeholder="Địa chỉ email"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Ngày sinh</label>
+                <input type="date" class="form-control" name="birthDate" id="birthDateEdit" aria-describedby="birthDate" placeholder="Ngày sinh"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Loại đại biểu</label>
+                <select class="form-control" id="typeOfDelegateEdit" name="typeOfDelegate" required>
+                  <option value="ĐẠI BIỂU CHÍNH THỨC">ĐẠI BIỂU CHÍNH THỨC</option>
+                  <option value="ĐẠI BIỂU CHỈ ĐỊNH">ĐẠI BIỂU CHỈ ĐỊNH</option>
+                  <option value="ĐẠI BIỂU DỰ KHUYẾT">ĐẠI BIỂU DỰ KHUYẾT</option>
+                  <option value="ĐẠI BIỂU ĐƯƠNG NHIÊN">ĐẠI BIỂU ĐƯƠNG NHIÊN</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Số điện thoại</label>
+                <input type="text" class="form-control" name="numberPhone" id="numberPhoneEdit" aria-describedby="numberPhone" placeholder="Số điện thoại"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Lớp</label>
+                <input type="text" class="form-control" name="class" id="classEdit" aria-describedby="class" placeholder="Lớp"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Khoa</label>
+                <input type="text" class="form-control" name="faculty" id="facultyEdit" aria-describedby="faculty" placeholder="Khoa"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Dân tộc</label>
+                <input type="text" class="form-control" name="nation" id="nationEdit" aria-describedby="nation" placeholder="Dân tộc"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Tôn giáo</label>
+                <input type="text" class="form-control" name="religion" id="religionEdit" aria-describedby="religion" placeholder="Tôn giáo"
+                  required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Ngày vào Đoàn</label>
+                <input type="date" class="form-control" name="dateInYouthUnion" id="dateInYouthUnionEdit" aria-describedby="dateInYouthUnion"
+                  placeholder="Ngày vào Đoàn">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Ngày vào Hội</label>
+                <input type="date" class="form-control" name="dateInStudentAssociation" id="dateInStudentAssociationEdit" aria-describedby="dateInStudentAssociation"
+                  placeholder="Ngày vào Hội">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                  <label for="name">Bạn là</label>
+                  <div class="form-check form-check-inline" style="display: inline-flex;">
+                      <label class="form-check-label" for="youthUnion">Cán bộ Đoàn</label>
+                    <input class="form-check-input" type="checkbox" id="youthUnionEdit" value="true" name="isALeaderYouth">
+                  </div>
+                  <div class="form-check form-check-inline" style="display: inline-flex;">
+                      <label class="form-check-label" for="associaltion">Cán bộ Hội</label>
+                    <input class="form-check-input" type="checkbox" id="associaltionEdit" value="true" name="isALeaderAssocial">
+                  </div>
+                  <div class="form-check form-check-inline" style="display: inline-flex;">
+                      <label class="form-check-label" for="partyMembers">Đảng viên</label>
+                    <input class="form-check-input" type="checkbox" id="partyMembersEdit" value="true" name="partyMembers">
+                  </div>
+                </div>
+              </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-primary" id="submit">Chỉnh sửa</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#IdNumber').blur(function () {
+    let IdNumber = $('#IdNumber').val();
+    $.ajax({
+      url: '/admin/delegates/create/' + IdNumber,
+      method: 'GET',
+      success: function (result) {
+        if (result.data) {
+          $('#IdNumber').notify("Mã số sinh viên này đã tồn tại", "danger");
+          $('#submit').prop('disabled', true);
+        } else {
+          $('#submit').prop('disabled', false);
+        }
+      }
+    })
+  })
+</script>

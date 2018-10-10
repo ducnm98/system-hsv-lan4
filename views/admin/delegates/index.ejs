@@ -43,8 +43,10 @@
                     <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#createNewDelegatesByFile">Nhập
                       file</button>
                     <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#updateAvatar">Avatar</button>
-                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#changePass">Change Pass</button>
-                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#updateType">Update Info</button>
+                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#changePass">Change
+                      Pass</button>
+                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#updateType">Update
+                      Info</button>
                   </div>
                 </div>
                 <div class="table-responsive">
@@ -53,6 +55,9 @@
                       <tr>
                         <th>
                           #
+                        </th>
+                        <th>
+                          MSSV
                         </th>
                         <th>
                           Họ và tên
@@ -68,12 +73,6 @@
                         </th>
                         <th>
                           Loại đại biểu
-                        </th>
-                        <th>
-                          Ngày vào Đoàn
-                        </th>
-                        <th>
-                          Ngày vào Hội
                         </th>
                         <th>
                           QrCode
@@ -93,6 +92,9 @@
                           <%- index + 1 %>
                         </td>
                         <td>
+                          <%- item.IdNumber %>
+                        </td>
+                        <td>
                           <%- item.fullName %>
                         </td>
                         <td>
@@ -108,24 +110,16 @@
                           <%- item.typeOfDelegate %>
                         </td>
                         <td>
-                          <% let dateInYouthUnion = new Date(item.dateInYouthUnion) %>
-                          <%- dateInYouthUnion.getDate() %>/
-                          <%- dateInYouthUnion.getMonth() + 1 %>/
-                          <%- dateInYouthUnion.getFullYear() %>
-                        </td>
-                        <td>
-                          <% let dateInStudentAssociation = new Date(item.dateInStudentAssociation) %>
-                          <%- dateInStudentAssociation.getDate() %>/
-                          <%- dateInStudentAssociation.getMonth() + 1 %>/
-                          <%- dateInStudentAssociation.getFullYear() %>
-                        </td>
-                        <td>
                           <img src="<%- item.qrCode %>">
                         </td>
                         <td>
                           <img src="<%- item.barCode %>">
                         </td>
                         <td>
+                          <button type="button" class="btn btn-icons btn-rounded btn-outline-warning" onclick="selectDelegates('<%- item._id %>')"
+                            data-toggle="modal" data-target="#editModal">
+                            <i class="fa fa-edit"></i>
+                          </button>
                           <button type="button" class="btn btn-icons btn-rounded btn-outline-warning" onclick="removeDelegate('<%- item._id %>')"
                             data-toggle="modal" data-target="#deleteModal">
                             <i class="fa fa-trash-o"></i>
@@ -174,17 +168,16 @@
   <% include ./modal/deleteDelegates %>
   <% include ./modal/changePassword %>
   <% include ./modal/updateType %>
+  <% include ./modal/editModal %>
 
   <script>
     var delegatesId;
     function removeDelegate(id) {
       delegatesId = id;
-      console.log(id)
     }
   </script>
   <script>
     function deleteDelegates() {
-      console.log(delegatesId)
       $.ajax({
         url: '/admin/delegates/' + delegatesId,
         method: "DELETE",
@@ -195,10 +188,45 @@
     }
   </script>
   <script>
+    const dateToInput = date =>
+      `${date.getFullYear()
+      }-${('0' + (date.getMonth() + 1)).slice(-2)
+      }-${('0' + date.getDate()).slice(-2)
+      }`;
+  </script>
+  <script>
+    function selectDelegates(id) {
+      $.ajax({
+        url: "/admin/delegates/" + id,
+        method: "GET",
+        success: function (result) {
+          let data = result.data;
+          $('#IdNumberEdit').val(data.IdNumber);
+          $('#fullNameEdit').val(data.fullName);
+          $('#emailEdit').val(data.email);
+          $('#birthDateEdit').val(dateToInput(new Date(data.birthDate)));
+          $('#genderEdit').val(data.gender);
+          $('#typeOfDelegateEdit').val(data.typeOfDelegate);
+          $('#numberPhoneEdit').val(data.numberPhone);
+          $('#classEdit').val(data.class);
+          $('#facultyEdit').val(data.faculty);
+          $('#nationEdit').val(data.nation);
+          $('#religionEdit').val(data.religion);
+          $('#dateInYouthUnionEdit').val(dateToInput(new Date(data.dateInYouthUnion)));
+          $('#dateInStudentAssociationEdit').val(dateToInput(new Date(data.dateInStudentAssociation)));
+          $('#youthUnionEdit').prop('checked', data.isALeaderYouth);
+          $('#associaltionEdit').prop('checked', data.isALeaderAssociation);
+          $('#partyMembersEdit').prop('checked', data.partyMembers);
+          $('#idEdit').val(data._id);
+
+        }
+      })
+    }
+  </script>
+  <script>
     $(document).ready(function () {
       $('#table_id').DataTable();
     });
-
   </script>
 </body>
 
