@@ -201,6 +201,7 @@
         method: "GET",
         success: function (result) {
           let data = result.data;
+          console.log(data)
           $('#IdNumberEdit').val(data.IdNumber);
           $('#fullNameEdit').val(data.fullName);
           $('#emailEdit').val(data.email);
@@ -218,7 +219,7 @@
           $('#associaltionEdit').prop('checked', data.isALeaderAssociation);
           $('#partyMembersEdit').prop('checked', data.partyMembers);
           $('#idEdit').val(data._id);
-
+          $('#numberOfYearEdit').val(data.numberOfYear);
         }
       })
     }
