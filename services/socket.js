@@ -13,6 +13,10 @@ module.exports = {
     let id = `totalOfDelegates-${data._id}`;
     io.emit(id, data)
   },
+  updateAnalytics: (data) => {
+    let id = `updateAnalytics-${data._id}`;
+    io.emit(id, data)
+  },
   delegatesIn: (data) => {
     io.emit('delegatesIn', data)
   },

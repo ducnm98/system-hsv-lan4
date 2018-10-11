@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var { updateAnalytics } = require('../../../services/socket');
 
 module.exports = router => {
   router.get("/attendance/:id", async (req, res, next) => {

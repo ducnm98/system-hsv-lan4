@@ -100,9 +100,6 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12 mt-3">
-            <h1 class="display-3" style="text-align: center;" id="textAllow"><%- sessionInfo.delegates.length > 91 ? 'ĐẠI HỘI ĐƯỢC PHÉP TIẾN HÀNH' : 'ĐẠI HỘI KHÔNG ĐƯỢC PHÉP TIẾN HÀNH' %></h1>
-          </div>
         </div>
 
       </div>
@@ -131,11 +128,10 @@
       $('#totalOfDelegatesAbsent').text(138 - data.delegates.length);
       $('#process').width(`${process}%`);
       $('#process').text(process);
-      $('#textAllow').text(data.delegates.length > 91 ? 'ĐAI HỘI ĐƯỢC PHÉP TIẾN HÀNH' : "ĐẠI HỘI KHÔNG ĐƯỢC PHÉP TIẾN HÀNH");
       
     })
-    socket.on('delegatesIn', function (data) {
-      console.log(data);
+    socket.on('updateAnalytics-<%- sessionInfo._id %>', function (data) {
+      console.log(data)
     })
   </script>
 
