@@ -171,7 +171,7 @@
     };
   </script>
   <script>
-    $('#nam').on('click', function() {
+    $('#nam').on('click', function () {
       $('.object').hide();
       currentId -= 1;
       $(`#${currentId}`).show();
@@ -196,97 +196,99 @@
 
     socket.on('updateAnalytics-<%- sessionInfo._id %>', function (data) {
       console.log(data);
-      // writeTable(data.religionGroup);
       $.each(data, function (key, value) {
         console.log(key, value);
+        let lables = [];
+        let data = [];
         if (key == "typeOfDelegate") {
-          let lables = [];
-          let data = [];
+          lables = [];
+          data = [];
           if (value.length > 0) {
+            console.log('1')
             value.map((item, index) => {
               lables.push(item._id);
               data.push(item.num);
             });
-            let data1 = {
-              labels: lables,
-              datasets: [{
-                label: 'Đại biểu',
-                data: data,
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-              }]
-            };
+            console.log('2')
             if ($("#sl-dai-bieu").length) {
-              var barChartCanvas = $("#sl-dai-bieu").get(0).getContext("2d");
               // This will get the first returned node in the jQuery collection.
-              var barChart = new Chart(barChartCanvas, {
+              var barChart = new Chart($("#sl-dai-bieu").get(0).getContext("2d"), {
                 type: 'bar',
-                data: data1,
+                data: {
+                  labels: lables,
+                  datasets: [{
+                    label: 'Đại biểu',
+                    data: data,
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(255,99,132,1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
                 options: options
               });
             }
           }
         }
         if (key == "genderGroup") {
-          let lables = [];
-          let data = [];
+          lables = [];
+          data = [];
           if (value.length > 0) {
             value.map((item, index) => {
               lables.push(item._id);
               data.push(item.num);
             });
             let data1 = {
-              labels: lables,
-              datasets: [{
-                label: 'Đại biểu',
-                data: data,
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-              }]
+
             };
             if ($("#sl-dai-bieu").length) {
-              var barChartCanvas = $("#sl-dai-bieu").get(0).getContext("2d");
               // This will get the first returned node in the jQuery collection.
-              var barChart = new Chart(barChartCanvas, {
+              barChart = new Chart($("#sl-dai-bieu").get(0).getContext("2d"), {
                 type: 'bar',
-                data: data1,
+                data: {
+                  labels: lables,
+                  datasets: [{
+                    label: 'Đại biểu',
+                    data: data,
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(255,99,132,1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
                 options: options
               });
             }
-          
+
           }
         }
-      
+
       });
 
     })
