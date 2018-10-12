@@ -202,7 +202,7 @@
           lables.push(item._id);
           data.push(item.num);
         });
-        let data = {
+        let data1 = {
           labels: lables,
           datasets: [{
             label: 'Đại biểu',
@@ -231,7 +231,7 @@
           // This will get the first returned node in the jQuery collection.
           var barChart = new Chart(barChartCanvas, {
             type: 'bar',
-            data: data,
+            data: data1,
             options: options
           });
         }
