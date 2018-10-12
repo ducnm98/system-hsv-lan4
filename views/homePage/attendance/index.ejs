@@ -228,7 +228,7 @@
   <!-- <script src="/js/chart.js"></script> -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    let socket = io.connect('http://localhost:2589');
+    let socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('totalOfDelegates-<%- sessionInfo._id %>', function (data) {
       let process = ((data.delegates.length / 138) * 100).toFixed(2);
       $('#totalOfDelegates').text(data.delegates.length);
