@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="row" style="margin: auto; width: 80%; display: none;" id="1">
+        <div class="row object" style="margin: auto; width: 80%;" id="1">
 
           <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
             <div class="card card-statistics">
@@ -114,12 +114,23 @@
           </div>
         </div>
 
-        <div class="row" style="margin: auto; width: 80%;" id="2">
+        <div class="row object" style="margin: auto; width: 80%; display: none;" id="2">
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
             <div class="card card-statistics">
               <div class="card-body">
-                <h4 class="card-title">Bar chart</h4>
-                <canvas id="barChart" style="height:230px"></canvas>
+                <h4 class="card-title">Về số lượng đại biểu</h4>
+                <canvas id="sl-dai-bieu" style="height:230px"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row object" style="margin: auto; width: 80%; display: none;" id="3">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
+            <div class="card card-statistics">
+              <div class="card-body">
+                <h4 class="card-title">Về cơ cấu</h4>
+                <canvas id="co-cau" style="height:230px"></canvas>
               </div>
             </div>
           </div>
@@ -140,6 +151,7 @@
   <script src="/vendors/js/vendor.bundle.base.js"></script>
   <script src="/vendors/js/vendor.bundle.addons.js"></script>
   <script>
+    var currentId = 1;
     var options = {
       scales: {
         yAxes: [{
@@ -157,28 +169,18 @@
         }
       }
     };
-
   </script>
   <script>
-    function writeTable(array) {
-      // declare html variable (a string holder):
-      var html = '';
-      for (var i = 0; i < array.length / 8; i++) {
-        // add opening <tr> tag to the string:
-        html += '<tr>';
-        for (var j = 0; j < totalCells; j++) {
-          // add <td> elements to the string:
-          html += '<td>' + array[count] + '</td>';
-          count++;
-        }
-        // add closing </tr> tag to the string:
-        html += '</tr>';
-      }
-      //append created html to the table body:
-      $('#2').append(html);
-      // reset the count:
-      count = 0;
-    }
+    $('#nam').on('click', function() {
+      $('.object').hide();
+      currentId -= 1;
+      $(`#${currentId}`).show();
+    });
+    $('#nu').on('click', function () {
+      $('.object').hide();
+      currentId += 1;
+      $(`#${currentId}`).show();
+    })
   </script>
   <!-- <script src="/js/chart.js"></script> -->
   <script src="/socket.io/socket.io.js"></script>
@@ -196,44 +198,93 @@
       console.log(data);
       // writeTable(data.religionGroup);
       $.each(data, function (key, value) {
-        let lables = [];
-        let data = [];
-        value.map((item, index) => {
-          lables.push(item._id);
-          data.push(item.num);
-        });
-        let data1 = {
-          labels: lables,
-          datasets: [{
-            label: 'Đại biểu',
-            data: data,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-          }]
-        };
-        if ($("#barChart").length) {
-          var barChartCanvas = $("#barChart").get(0).getContext("2d");
-          // This will get the first returned node in the jQuery collection.
-          var barChart = new Chart(barChartCanvas, {
-            type: 'bar',
-            data: data1,
-            options: options
-          });
+        console.log(key)
+        if (key == "typeOfDelegate") {
+          let lables = [];
+          let data = [];
+          if (value.length > 0) {
+            value.map((item, index) => {
+              lables.push(item._id);
+              data.push(item.num);
+            });
+            let data1 = {
+              labels: lables,
+              datasets: [{
+                label: 'Đại biểu',
+                data: data,
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+              }]
+            };
+            if ($("#sl-dai-bieu").length) {
+              var barChartCanvas = $("#sl-dai-bieu").get(0).getContext("2d");
+              // This will get the first returned node in the jQuery collection.
+              var barChart = new Chart(barChartCanvas, {
+                type: 'bar',
+                data: data1,
+                options: options
+              });
+            }
+          }
+        }
+        if (key == "genderGroup") {
+          let lables = [];
+          let data = [];
+          if (value.length > 0) {
+            value.map((item, index) => {
+              lables.push(item._id);
+              data.push(item.num);
+            });
+            let data1 = {
+              labels: lables,
+              datasets: [{
+                label: 'Đại biểu',
+                data: data,
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+              }]
+            };
+            if ($("#sl-dai-bieu").length) {
+              var barChartCanvas = $("#sl-dai-bieu").get(0).getContext("2d");
+              // This will get the first returned node in the jQuery collection.
+              var barChart = new Chart(barChartCanvas, {
+                type: 'bar',
+                data: data1,
+                options: options
+              });
+            }
+          
+          }
         }
       });
 

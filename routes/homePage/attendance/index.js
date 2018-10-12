@@ -113,6 +113,19 @@ module.exports = router => {
           }
         }
       ]);
+      let data = {
+        religionGroup,
+        genderGroup,
+        isALeaderYouth,
+        isALeaderAssociation,
+        politic,
+        partyMembers,
+        typeOfDelegate,
+        _id: req.params.id
+      };
+      setTimeout( function() {
+        updateAnalytics(data);
+      }, 1500);
       console.log(religionGroup, genderGroup, isALeaderYouth, isALeaderAssociation, politic, partyMembers, typeOfDelegate)
       return res.render("homePage/attendance", {
         sessionInfo,
