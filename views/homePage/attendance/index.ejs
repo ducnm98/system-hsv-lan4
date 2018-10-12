@@ -243,7 +243,7 @@
       let totalDelegates = parseInt($('#totalOfDelegates').text());
 
       let dataSlDaiBieu = [totalDelegates, 0, 0, 0];
-      let dataCoCau = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      let dataCoCau = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       let dataReligionGroup = [0, 0, 0, 0];
       let dataNation = [0, 0, 0, 0, 0, 0];
       $.each(datas, function (key, value) {
@@ -288,7 +288,7 @@
             }
             if (item._id == "4") {
               dataCoCau[5] += item.num ? item.num : 0;
-              temp += item.num;
+              temp += item.num;`
             }
             if (item._id == "5") {
               dataCoCau[6] += item.num ? item.num : 0;
