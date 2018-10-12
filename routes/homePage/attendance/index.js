@@ -123,7 +123,8 @@ module.exports = router => {
         typeOfDelegate,
         _id: req.params.id
       };
-      setTimeout( function() {
+      setTimeout(function() {
+        console.log(data)
         updateAnalytics(data);
       }, 1500);
       console.log(religionGroup, genderGroup, isALeaderYouth, isALeaderAssociation, politic, partyMembers, typeOfDelegate)
