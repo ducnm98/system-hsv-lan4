@@ -121,17 +121,15 @@
   <script>
     let socket = io.connect('http://daihoi.hsvbot.me:2589');
     socket.on('totalOfDelegates-<%- sessionInfo._id %>', function (data) {
-      
       let process = ((data.delegates.length / 138) * 100).toFixed(2);
-
       $('#totalOfDelegates').text(data.delegates.length);
       $('#totalOfDelegatesAbsent').text(138 - data.delegates.length);
       $('#process').width(`${process}%`);
       $('#process').text(process);
-      
-    })
+    });
+    
     socket.on('updateAnalytics-<%- sessionInfo._id %>', function (data) {
-      console.log(data)
+      console.log(data);
     })
   </script>
 

@@ -101,7 +101,7 @@ module.exports = {
       isALeaderAssociation,
       politic,
       partyMembers,
-      id: id
+      _id: id
     }
     updateAnalytics(data)
   }
