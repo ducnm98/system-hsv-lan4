@@ -98,7 +98,22 @@ module.exports = router => {
           }
         }
       ]);
-      console.log(religionGroup, genderGroup, isALeaderYouth, isALeaderAssociation, politic, partyMembers)
+      let typeOfDelegate = await mongoose.model("attendance").aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          }
+        },
+        { $unwind: "$delegates" },
+        { $unwind: "$delegates.typeOfDelegate" },
+        {
+          $group: {
+            _id: "$delegates.typeOfDelegate",
+            num: { $sum: 1 }
+          }
+        }
+      ]);
+      console.log(religionGroup, genderGroup, isALeaderYouth, isALeaderAssociation, politic, partyMembers, typeOfDelegate)
       return res.render("homePage/attendance", {
         sessionInfo,
         religionGroup,
@@ -106,7 +121,8 @@ module.exports = router => {
         isALeaderYouth,
         isALeaderAssociation,
         politic,
-        partyMembers
+        partyMembers,
+        typeOfDelegate
       });
     } catch (err) {
       console.log(err);

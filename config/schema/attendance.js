@@ -25,6 +25,7 @@ var attendance = new mongoose.Schema({
       isALeaderYouth: { type: Boolean },
       isALeaderAssociation: { type: Boolean },
       partyMembers: { type: Boolean },
+      typeOfDelegate: { type: String },
       createdTime: {
         type: Date,
         default: new Date()

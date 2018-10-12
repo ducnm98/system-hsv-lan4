@@ -48,7 +48,8 @@ module.exports = router => {
                   politic: userInfo.politic,
                   isALeaderYouth: userInfo.isALeaderYouth,
                   isALeaderAssociation: userInfo.isALeaderAssociation,
-                  partyMembers: userInfo.partyMembers
+                  partyMembers: userInfo.partyMembers,
+                  typeOfDelegate: userInfo.typeOfDelegate,
                 }
               }
             }
@@ -96,7 +97,8 @@ module.exports = router => {
                   politic: userInfo.politic,
                   isALeaderYouth: userInfo.isALeaderYouth,
                   isALeaderAssociation: userInfo.isALeaderAssociation,
-                  partyMembers: userInfo.partyMembers
+                  partyMembers: userInfo.partyMembers,
+                  typeOfDelegate: userInfo.typeOfDelegate,
                 }
               }
             }

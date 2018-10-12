@@ -1,8 +1,8 @@
-var { updateAnalytics } = require('../../../services/socket');
-var mongoose = require('mongoose');
+var { updateAnalytics } = require("../../../services/socket");
+var mongoose = require("mongoose");
 
 module.exports = {
-  sendTypeOfUsers: async (id) => {
+  sendTypeOfUsers: async id => {
     let religionGroup = await mongoose.model("attendance").aggregate([
       {
         $match: {
@@ -94,6 +94,21 @@ module.exports = {
         }
       }
     ]);
+    let typeOfDelegate = await mongoose.model("attendance").aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(`${id}`)
+        }
+      },
+      { $unwind: "$delegates" },
+      { $unwind: "$delegates.typeOfDelegate" },
+      {
+        $group: {
+          _id: "$delegates.typeOfDelegate",
+          num: { $sum: 1 }
+        }
+      }
+    ]);
     let data = {
       religionGroup,
       genderGroup,
@@ -101,8 +116,9 @@ module.exports = {
       isALeaderAssociation,
       politic,
       partyMembers,
+      typeOfDelegate,
       _id: id
-    }
-    updateAnalytics(data)
+    };
+    updateAnalytics(data);
   }
-}
+};

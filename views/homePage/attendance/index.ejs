@@ -24,9 +24,19 @@
 
 <body>
 
+
+
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
       <div class="content-wrapper d-flex align-items-center auth theme-one" style="background: url('/images/background_no_logo.png'); background-size: cover;">
+
+        <div>
+          <img src="/images/nam.png" style="position: absolute; bottom: 20px;" id="nam">
+        </div>
+
+        <div>
+          <img src="/images/nu.png" style="position: absolute; bottom: 20px; right: 10px;" id="nu">
+        </div>
 
         <div style="top: 20px; position: absolute; left: 0; right: 0; margin-left: auto; margin-right: auto;">
           <div class="col-md-3" style="margin: auto">
@@ -34,7 +44,7 @@
           </div>
         </div>
 
-        <div class="row" style="margin: auto; width: 80%;">
+        <div class="row" style="margin: auto; width: 80%; display: none;" id="1">
 
           <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 grid-margin stretch-card">
             <div class="card card-statistics">
@@ -96,7 +106,20 @@
             <div class="wrapper">
               <div class="progress" style="height: 40px;">
                 <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"
-                  style="width: <%- ((sessionInfo.delegates.length / 138) * 100).toFixed(2) %>%" id="process"><%- ((sessionInfo.delegates.length / 138) * 100).toFixed(2) %></div>
+                  style="width: <%- ((sessionInfo.delegates.length / 138) * 100).toFixed(2) %>%" id="process">
+                  <%- ((sessionInfo.delegates.length / 138) * 100).toFixed(2) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin: auto; width: 80%;" id="2">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
+            <div class="card card-statistics">
+              <div class="card-body">
+                <h4 class="card-title">Bar chart</h4>
+                <canvas id="barChart" style="height:230px"></canvas>
               </div>
             </div>
           </div>
@@ -116,7 +139,80 @@
   <!-- SCIPTS -->
   <script src="/vendors/js/vendor.bundle.base.js"></script>
   <script src="/vendors/js/vendor.bundle.addons.js"></script>
-
+  <script>
+    var options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      },
+      legend: {
+        display: false
+      },
+      elements: {
+        point: {
+          radius: 0
+        }
+      }
+    };
+    var data = {
+      labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+      datasets: [{
+        label: '# of Votes',
+        data: [10, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+    if ($("#barChart").length) {
+      var barChartCanvas = $("#barChart").get(0).getContext("2d");
+      // This will get the first returned node in the jQuery collection.
+      var barChart = new Chart(barChartCanvas, {
+        type: 'bar',
+        data: data,
+        options: options
+      });
+    }
+  </script>
+  <script>
+    function writeTable(array) {
+      // declare html variable (a string holder):
+      var html = '';
+      for (var i = 0; i < array.length / 8; i++) {
+        // add opening <tr> tag to the string:
+        html += '<tr>';
+        for (var j = 0; j < totalCells; j++) {
+          // add <td> elements to the string:
+          html += '<td>' + array[count] + '</td>';
+          count++;
+        }
+        // add closing </tr> tag to the string:
+        html += '</tr>';
+      }
+      //append created html to the table body:
+      $('#2').append(html);
+      // reset the count:
+      count = 0;
+    }
+  </script>
+  <!-- <script src="/js/chart.js"></script> -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
     let socket = io.connect('http://daihoi.hsvbot.me:2589');
@@ -127,11 +223,18 @@
       $('#process').width(`${process}%`);
       $('#process').text(process);
     });
-    
+
     socket.on('updateAnalytics-<%- sessionInfo._id %>', function (data) {
       console.log(data);
+      // writeTable(data.religionGroup);
+      // let keys = Object.keys(data);
+      $.each(data, function (index, value) {
+        console.log(index, value);
+      });
+
     })
   </script>
+
 
 </body>
 
