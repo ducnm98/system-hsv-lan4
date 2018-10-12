@@ -196,23 +196,23 @@
 
     socket.on('updateAnalytics-<%- sessionInfo._id %>', function (data) {
       console.log(data);
+      // barChart.destroy();
       $.each(data, function (key, value) {
         console.log(key, value);
         let lables = [];
         let data = [];
+        let barChart;
         if (key == "typeOfDelegate") {
           lables = [];
           data = [];
           if (value.length > 0) {
-            console.log('1')
             value.map((item, index) => {
               lables.push(item._id);
               data.push(item.num);
             });
-            console.log('2')
             if ($("#sl-dai-bieu").length) {
               // This will get the first returned node in the jQuery collection.
-              var barChart = new Chart($("#sl-dai-bieu").get(0).getContext("2d"), {
+              barChart = new Chart($("#sl-dai-bieu").get(0).getContext("2d"), {
                 type: 'bar',
                 data: {
                   labels: lables,
