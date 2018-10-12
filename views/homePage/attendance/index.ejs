@@ -140,25 +140,15 @@
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
             <div class="card card-statistics">
               <div class="card-body">
-                <h4 class="card-title">Về cơ cấu</h4>
-                <canvas id="isALeaderYouth" style="height:230px"></canvas>
+                <h4 class="card-title">Về tuổi đời</h4>
+                <h3>Sinh viên lớn tuổi nhất: </h3><h3 id="birthDateMax"></h3>
+                <h3>Sinh viên lớn nhỏ nhất: </h3><h3 id="birthDateMin"></h3>
               </div>
             </div>
           </div>
         </div>
 
         <div class="row object" style="margin: auto; width: 80%; display: none;" id="5">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
-            <div class="card card-statistics">
-              <div class="card-body">
-                <h4 class="card-title">Về tuổi đời</h4>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row object" style="margin: auto; width: 80%; display: none;" id="6">
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
             <div class="card card-statistics">
               <div class="card-body">
@@ -169,7 +159,7 @@
           </div>
         </div>
 
-        <div class="row object" style="margin: auto; width: 80%; display: none;" id="7">
+        <div class="row object" style="margin: auto; width: 80%; display: none;" id="6">
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
             <div class="card card-statistics">
               <div class="card-body">
@@ -230,12 +220,15 @@
     function getSum(total, num) {
       return total + num;
     }
+    function getPercent(num, total) {
+      return Math.round(num * 10000 / total) / 100;
+    }
   </script>
 
   <!-- <script src="/js/chart.js"></script> -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    let socket = io.connect('http://daihoi.hsvbot.me:2589');
+    let socket = io.connect('http://localhost:2589');
     socket.on('totalOfDelegates-<%- sessionInfo._id %>', function (data) {
       let process = ((data.delegates.length / 138) * 100).toFixed(2);
       $('#totalOfDelegates').text(data.delegates.length);
@@ -248,11 +241,16 @@
       let totalDelegates = parseInt($('#totalOfDelegates').text());
 
       let dataSlDaiBieu = [totalDelegates, 0, 0, 0];
-      let dataCoCau = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      let dataCoCau = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       let dataReligionGroup = [0, 0, 0, 0];
-      let dataNation = [0, 0, 0, 0, 0, 0];
+    let dataNation = [0, 0, 0, 0, 0, 0];
       $.each(datas, function (key, value) {
-
+        if (key == "nameMax") {
+          $('#birthDateMax').text(`${value.fullName}`)
+        }
+        if (key == "nameMin") {
+          $('#birthDateMin').text(`${value.fullName}`)
+        }
         if (key == "typeOfDelegate") {
           value.map(item => {
             if (item._id == "ĐẠI BIỂU ĐƯƠNG NHIÊN") {
@@ -315,7 +313,6 @@
             }
           })
         }
-
         if (key == "nation") {
           let tempNation = 0;
           value.map(item => {
@@ -337,7 +334,6 @@
           })
           dataNation[1] = tempNation;
         }
-
         if (key == "religionGroup") {
           let tempReligionGroup = 0;
           value.map(item => {
@@ -354,14 +350,20 @@
               tempReligionGroup += item.num ? item.num : 0;
             }
           })
-          dataReligionGroup[4] = totalDelegates - tempReligionGroup;
+          dataReligionGroup[3] = totalDelegates - tempReligionGroup;
         }
       });
 
+      console.log(dataSlDaiBieu);
       let SlDaiBieu = new Chart($("#SlDaiBieu").get(0).getContext("2d"), {
         type: 'bar',
         data: {
-          labels: ["Tổng số Đại biểu", "ĐB Đương nhiên", "ĐB Từ cơ sở", "ĐB Chỉ định"],
+          labels: [
+            "Tổng số Đại biểu: 100%",
+            "ĐB Đương nhiên: " + getPercent(dataSlDaiBieu[1], totalDelegates) + "%",
+            "ĐB Từ cơ sở: " + getPercent(dataSlDaiBieu[2], totalDelegates) + "%",
+            "ĐB Chỉ định: " + getPercent(dataSlDaiBieu[3], totalDelegates) + "%"
+            ],
           datasets: [{
             label: 'Đại biểu',
             data: dataSlDaiBieu,
@@ -387,10 +389,22 @@
         options: options
       });
 
+      console.log(dataCoCau);
       let CoCau = new Chart($("#CoCau").get(0).getContext("2d"), {
         type: 'bar',
         data: {
-          labels: ["ĐB là Nữ", "ĐB là SV", "SV năm 1", "SV năm 2", "SV năm 3", "SV năm 4", "SV năm 5", "SV năm 6", "ĐB là Đảng viên", "ĐB là Đoàn viên"],
+          labels: [
+            "ĐB là Nữ: " + getPercent(dataCoCau[0], totalDelegates) + "%", 
+            "ĐB là SV: " + getPercent(dataCoCau[1], totalDelegates) + "%", 
+            "SV năm 1: " + getPercent(dataCoCau[2], totalDelegates) + "%", 
+            "SV năm 2: " + getPercent(dataCoCau[3], totalDelegates) + "%", 
+            "SV năm 3: " + getPercent(dataCoCau[4], totalDelegates) + "%", 
+            "SV năm 4: " + getPercent(dataCoCau[5], totalDelegates) + "%", 
+            "SV năm 5: " + getPercent(dataCoCau[6], totalDelegates) + "%", 
+            "SV năm 6: " + getPercent(dataCoCau[7], totalDelegates) + "%", 
+            "ĐB là Đảng viên: " + getPercent(dataCoCau[8], totalDelegates) + "%", 
+            "ĐB là Đoàn viên: " + getPercent(dataCoCau[9], totalDelegates) + "%"
+          ],
           datasets: [{
             label: 'Đại biểu',
             data: dataCoCau,
@@ -421,11 +435,19 @@
         },
         options: options
       });
-
+      
+      console.log(dataNation);
       let nation = new Chart($("#nation").get(0).getContext("2d"), {
         type: 'bar',
         data: {
-          labels: ["Kinh", "Thiểu số", "Hoa", "Khơ me", "Châu Ro", "Khác"],
+          labels: [
+            "Kinh: " + getPercent(dataNation[0], totalDelegates) + "%",
+            "Thiểu số: " + getPercent(dataNation[1], totalDelegates) + "%", 
+            "Hoa: " + getPercent(dataNation[2], totalDelegates) + "%", 
+            "Khơ me: " + getPercent(dataNation[3], totalDelegates) + "%", 
+            "Châu Ro: " + getPercent(dataNation[4], totalDelegates) + "%", 
+            "Khác: " + getPercent(dataNation[5], totalDelegates) + "%"
+          ],
           datasets: [{
             label: 'Đại biểu',
             data: dataNation,
@@ -451,10 +473,16 @@
         options: options
       });
 
+      console.log(dataReligionGroup);
       let religionGroup = new Chart($("#religionGroup").get(0).getContext("2d"), {
         type: 'bar',
         data: {
-          labels: ["Không", "Phật giáo", "Thiên chúa giáo", "Khác"],
+          labels: [
+            "Không: " + getPercent(dataReligionGroup[0], totalDelegates) + "%",
+            "Phật giáo: " + getPercent(dataReligionGroup[1], totalDelegates) + "%",
+            "Thiên chúa giáo: " + getPercent(dataReligionGroup[2], totalDelegates) + "%",
+            "Khác: " + getPercent(dataReligionGroup[3], totalDelegates) + "%"
+          ],
           datasets: [{
             label: 'Đại biểu',
             data: dataReligionGroup,
