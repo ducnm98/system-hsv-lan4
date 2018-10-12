@@ -14,6 +14,7 @@ module.exports = {
     io.emit(id, data)
   },
   updateAnalytics: (data) => {
+    console.log(data);
     let id = `updateAnalytics-${data._id}`;
     io.emit(id, data)
   },
