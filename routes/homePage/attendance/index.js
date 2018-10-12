@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var { updateAnalytics } = require('../../../services/socket');
+var { updateAnalytics } = require("../../../services/socket");
 
 module.exports = router => {
   router.get("/attendance/:id", async (req, res, next) => {
@@ -113,6 +113,21 @@ module.exports = router => {
           }
         }
       ]);
+      let numberOfYear = await mongoose.model("attendance").aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          }
+        },
+        { $unwind: "$delegates" },
+        { $unwind: "$delegates.numberOfYear" },
+        {
+          $group: {
+            _id: "$delegates.numberOfYear",
+            num: { $sum: 1 }
+          }
+        }
+      ]);
       let data = {
         religionGroup,
         genderGroup,
@@ -121,13 +136,12 @@ module.exports = router => {
         politic,
         partyMembers,
         typeOfDelegate,
+        numberOfYear,
         _id: req.params.id
       };
       setTimeout(function() {
-        console.log('run here')
-        updateAnalytics(data);
-      }, 1500);
-      console.log(religionGroup, genderGroup, isALeaderYouth, isALeaderAssociation, politic, partyMembers, typeOfDelegate)
+        updateAnalytics(data)
+      }, 2000)
       return res.render("homePage/attendance", {
         sessionInfo,
         religionGroup,
