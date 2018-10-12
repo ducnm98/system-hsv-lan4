@@ -165,7 +165,7 @@ module.exports = {
         $group: {
           _id: "$birthDate",
           max: { $max: "$birthDate" },
-          min: { $min: "$birthDate" },
+          min: { $min: "$birthDate" }
         }
       }
     ]);
@@ -179,6 +179,7 @@ module.exports = {
       typeOfDelegate,
       isYouth,
       numberOfYear,
+      nation,
       birthDate,
       _id: req.params.id
     };
