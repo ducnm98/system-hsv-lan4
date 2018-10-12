@@ -72,6 +72,9 @@
                           Đơn vị
                         </th>
                         <th>
+                          Năm sinh
+                        </th>
+                        <th>
                           Loại đại biểu
                         </th>
                         <th>
@@ -105,6 +108,9 @@
                         </td>
                         <td>
                           <%- item.faculty %>
+                        </td>
+                        <td>
+                          <%- new Date(item.birthDate).getFullYear() %>
                         </td>
                         <td>
                           <%- item.typeOfDelegate %>
