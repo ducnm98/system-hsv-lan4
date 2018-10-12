@@ -155,7 +155,7 @@ module.exports = {
       }
     ]);
     let nameMax = await mongoose.model('delegates').find().sort({ birthDate: 1}).limit(1);
-    let nameMin = await mongoose.model('delegates').find().sort({ birthDate: -1}).limit(1);
+    let nameMin = await mongoose.model('delegates').find().sort({ birthDate: -1}).limit(4);
     let data = {
       religionGroup,
       genderGroup,
