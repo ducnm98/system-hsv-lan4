@@ -124,6 +124,21 @@ module.exports = {
         }
       }
     ]);
+    let isYouth = await mongoose.model("attendance").aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(`${req.params.id}`)
+        }
+      },
+      { $unwind: "$delegates" },
+      { $unwind: "$delegates.isYouth" },
+      {
+        $group: {
+          _id: "$delegates.isYouth",
+          num: { $sum: 1 }
+        }
+      }
+    ]);
     let data = {
       religionGroup,
       genderGroup,
@@ -133,6 +148,7 @@ module.exports = {
       partyMembers,
       numberOfYear,
       typeOfDelegate,
+      isYouth,
       _id: id
     };
     updateAnalytics(data);

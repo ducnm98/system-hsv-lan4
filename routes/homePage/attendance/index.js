@@ -128,6 +128,21 @@ module.exports = router => {
           }
         }
       ]);
+      let isYouth = await mongoose.model("attendance").aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          }
+        },
+        { $unwind: "$delegates" },
+        { $unwind: "$delegates.isYouth" },
+        {
+          $group: {
+            _id: "$delegates.isYouth",
+            num: { $sum: 1 }
+          }
+        }
+      ]);
       let data = {
         religionGroup,
         genderGroup,
@@ -136,6 +151,7 @@ module.exports = router => {
         politic,
         partyMembers,
         typeOfDelegate,
+        isYouth,
         numberOfYear,
         _id: req.params.id
       };

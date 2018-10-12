@@ -15,7 +15,6 @@ module.exports = {
   },
   updateAnalytics: (data) => {
     let id = `updateAnalytics-${data._id}`;
-    console.log(id);
     io.emit(id, data)
   },
   delegatesIn: (data) => {

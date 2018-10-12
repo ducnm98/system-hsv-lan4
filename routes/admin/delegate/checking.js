@@ -4,6 +4,8 @@ var { updateNumberOfDelegates, delegatesIn, delegatesOut } = require('../../../s
 var { checkPermission } = require('../../../services/checkPermission');
 var { TYPE_OF_ADMIN } = require("../../constants");
 var { sendTypeOfUsers } = require('./analytics');
+var _ = require('lodash');
+
 module.exports = router => {
   router.get("/checking", (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -48,6 +50,7 @@ module.exports = router => {
                   politic: userInfo.politic,
                   isALeaderYouth: userInfo.isALeaderYouth,
                   isALeaderAssociation: userInfo.isALeaderAssociation,
+                  isYouth: _.isDate(userInfo.dateInYouthUnion),
                   partyMembers: userInfo.partyMembers,
                   typeOfDelegate: userInfo.typeOfDelegate,
                 }
@@ -97,6 +100,7 @@ module.exports = router => {
                   politic: userInfo.politic,
                   isALeaderYouth: userInfo.isALeaderYouth,
                   isALeaderAssociation: userInfo.isALeaderAssociation,
+                  isYouth: _.isDate(userInfo.dateInYouthUnion),
                   partyMembers: userInfo.partyMembers,
                   typeOfDelegate: userInfo.typeOfDelegate,
                 }

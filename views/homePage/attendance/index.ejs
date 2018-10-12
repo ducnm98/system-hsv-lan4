@@ -119,7 +119,7 @@
             <div class="card card-statistics">
               <div class="card-body">
                 <h4 class="card-title">Về số lượng đại biểu</h4>
-                <canvas id="genderGroup" style="height:230px"></canvas>
+                <canvas id="SlDaiBieu" style="height:200px"></canvas>
               </div>
             </div>
           </div>
@@ -130,7 +130,7 @@
             <div class="card card-statistics">
               <div class="card-body">
                 <h4 class="card-title">Về cơ cấu</h4>
-                <canvas id="religionGroup" style="height:230px"></canvas>
+                <canvas id="CoCau" style="height:230px"></canvas>
               </div>
             </div>
           </div>
@@ -238,10 +238,16 @@
     })
   </script>
 
+  <script>
+    function getSum(total, num) {
+      return total + num;
+    }
+  </script>
+
   <!-- <script src="/js/chart.js"></script> -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    let socket = io.connect('http://daihoi.hsvbot.me:2589');
+    let socket = io.connect('http://localhost:2589');
     socket.on('totalOfDelegates-<%- sessionInfo._id %>', function (data) {
       let process = ((data.delegates.length / 138) * 100).toFixed(2);
       $('#totalOfDelegates').text(data.delegates.length);
@@ -251,325 +257,137 @@
     });
     socket.on('updateAnalytics-<%- sessionInfo._id %>', function (datas) {
       console.log(datas);
-      let lables = [];
-      let data = [];
+      let totalDelegates = parseInt($('#totalOfDelegates').text());
+
+      let dataSlDaiBieu = [totalDelegates, 0, 0, 0];
+      let dataCoCau = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
       $.each(datas, function (key, value) {
-        console.log(key)
+
         if (key == "typeOfDelegate") {
-          lables = [];
-          data = [];
-          if (value.length > 0) {
-            value.map((item, index) => {
-              lables.push(item._id);
-              data.push(item.num);
-            });
-            let typeOfDelegate = new Chart($("#typeOfDelegate").get(0).getContext("2d"), {
-              type: 'bar',
-              data: {
-                labels: lables,
-                datasets: [{
-                  label: 'Đại biểu',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: options
-            });
-          }
+          value.map(item => {
+            if (item._id == "ĐẠI BIỂU ĐƯƠNG NHIÊN") {
+              dataSlDaiBieu[1] = item.num ? item.num : 0;
+            }
+            if (item._id == "ĐẠI BIỂU CHỈ ĐỊNH") {
+              dataSlDaiBieu[3] = item.num ? item.num : 0;
+            }
+          })
+          dataSlDaiBieu[2] = totalDelegates - dataSlDaiBieu[1] - dataSlDaiBieu[3];
         }
 
         if (key == "genderGroup") {
-          lables = [];
-          data = [];
-          if (value.length > 0) {
-            value.map((item, index) => {
-              lables.push(item._id);
-              data.push(item.num);
-            });
-            let genderGroup = new Chart($("#genderGroup").get(0).getContext("2d"), {
-              type: 'bar',
-              data: {
-                labels: lables,
-                datasets: [{
-                  label: 'Đại biểu',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: options
-            });
-          }
-        }
-
-        if (key == "religionGroup") {
-          lables = [];
-          data = [];
-          if (value.length > 0) {
-            value.map((item, index) => {
-              lables.push(item._id);
-              data.push(item.num);
-            });
-            religionGroup = new Chart($("#religionGroup").get(0).getContext("2d"), {
-              type: 'bar',
-              data: {
-                labels: lables,
-                datasets: [{
-                  label: 'Đại biểu',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: options
-            });
-          }
-        }
-
-        if (key == "isALeaderYouth") {
-          lables = [];
-          data = [];
-          if (value.length > 0) {
-            value.map((item, index) => {
-              lables.push(item._id);
-              data.push(item.num);
-            });
-            isALeaderYouth = new Chart($("#isALeaderYouth").get(0).getContext("2d"), {
-              type: 'bar',
-              data: {
-                labels: lables,
-                datasets: [{
-                  label: 'Đại biểu',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: options
-            });
-          }
-        }
-
-        if (key == "isALeaderAssociation") {
-          lables = [];
-          data = [];
-          if (value.length > 0) {
-            value.map((item, index) => {
-              lables.push(item._id);
-              data.push(item.num);
-            });
-            isALeaderAssociation = new Chart($("#isALeaderAssociation").get(0).getContext("2d"), {
-              type: 'bar',
-              data: {
-                labels: lables,
-                datasets: [{
-                  label: 'Đại biểu',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: options
-            });
-          }
-        }
-
-        if (key == "politic") {
-          lables = [];
-          data = [];
-          if (value.length > 0) {
-            value.map((item, index) => {
-              lables.push(item._id);
-              data.push(item.num);
-            });
-            politic = new Chart($("#politic").get(0).getContext("2d"), {
-              type: 'bar',
-              data: {
-                labels: lables,
-                datasets: [{
-                  label: 'Đại biểu',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: options
-            });
-          }
-        }
-
-        if (key == "partyMembers") {
-          lables = [];
-          data = [];
-          if (value.length > 0) {
-            value.map((item, index) => {
-              lables.push(item._id);
-              data.push(item.num);
-            });
-            partyMembers = new Chart($("#partyMembers").get(0).getContext("2d"), {
-              type: 'bar',
-              data: {
-                labels: lables,
-                datasets: [{
-                  label: 'Đại biểu',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: options
-            });
-          }
+          value.map(item => {
+            if (item._id == false || item._id == "false") {
+              dataCoCau[0] = item.num ? item.num : 0;
+            }
+          })
         }
 
         if (key == "numberOfYear") {
-          lables = [];
-          data = [];
-          if (value.length > 0) {
-            value.map((item, index) => {
-              lables.push(item._id);
-              data.push(item.num);
-            });
-            numberOfYear = new Chart($("#numberOfYear").get(0).getContext("2d"), {
-              type: 'bar',
-              data: {
-                labels: lables,
-                datasets: [{
-                  label: 'Đại biểu',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: options
-            });
-          }
+          let temp = 0;
+          value.map(item => {
+            if (item._id == "1") {
+              dataCoCau[2] = item.num ? item.num : 0;
+              temp += item.num;
+            }
+            if (item._id == "2") {
+              dataCoCau[3] = item.num ? item.num : 0;
+              temp += item.num;
+            }
+            if (item._id == "3") {
+              dataCoCau[4] = item.num ? item.num : 0;
+              temp += item.num;
+            }
+            if (item._id == "4") {
+              dataCoCau[5] = item.num ? item.num : 0;
+              temp += item.num;
+            }
+            if (item._id == "5") {
+              dataCoCau[6] = item.num ? item.num : 0;
+              temp += item.num;
+            }
+            if (item._id == "6") {
+              dataCoCau[7] = item.num ? item.num : 0;
+              temp += item.num;
+            }
+          })
+          dataCoCau[1] = temp;
         }
 
-
+        if (key == "partyMembers") {
+          value.map(item => {
+            if (item._id == true || item._id == "true") {
+              dataCoCau[8] = item.num ? item.num : 0;
+            }
+          })
+        }
+        if (key == "isYouth") {
+          value.map(item => {
+            if (item._id == true || item._id == "true") {
+              dataCoCau[9] = item.num ? item.num : 0;
+            }
+          })
+        }
       });
 
+      let SlDaiBieu = new Chart($("#SlDaiBieu").get(0).getContext("2d"), {
+        type: 'bar',
+        data: {
+          labels: ["Tổng số Đại biểu", "ĐB Đương nhiên", "ĐB Từ cơ sở", "ĐB Chỉ định"],
+          datasets: [{
+            label: 'Đại biểu',
+            data: dataSlDaiBieu,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: options
+      });
+
+      let CoCau = new Chart($("#CoCau").get(0).getContext("2d"), {
+        type: 'bar',
+        data: {
+          labels: ["ĐB là Nữ", "ĐB là SV", "SV năm 1", "SV năm 2", "SV năm 3", "SV năm 4", "SV năm 5", "SV năm 6", "ĐB là Đảng viên", "ĐB là Đoàn viên"],
+          datasets: [{
+            label: 'Đại biểu',
+            data: dataCoCau,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: options
+      });
     })
 
   </script>
