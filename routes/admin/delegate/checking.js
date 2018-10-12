@@ -31,7 +31,7 @@ module.exports = router => {
     if (req.isAuthenticated()) {
       if(checkPermission(req.user.roles, TYPE_OF_ADMIN)) {
         try {
-          sendTypeOfUsers(req.params.id);
+          sendTypeOfUsers(req.params.sessionId);
           let userInfo = await mongoose.model('delegates').findOne({ _id: req.params.id });
           if (userInfo) {
             let update = {
@@ -79,7 +79,7 @@ module.exports = router => {
     if (req.isAuthenticated()) {
       if(checkPermission(req.user.roles, TYPE_OF_ADMIN)) {
         try {
-          sendTypeOfUsers(req.params.id);
+          sendTypeOfUsers(req.params.sessionId);
           let userInfo = await mongoose.model('delegates').findOne({ _id: req.params.id })
           if (userInfo) {
             let update = {

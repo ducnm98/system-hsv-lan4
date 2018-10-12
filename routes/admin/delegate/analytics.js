@@ -1,4 +1,6 @@
-var { updateAnalytics } = require('../../../services/socket')
+var { updateAnalytics } = require('../../../services/socket');
+var mongoose = require('mongoose');
+
 module.exports = {
   sendTypeOfUsers: async (id) => {
     let religionGroup = await mongoose.model("attendance").aggregate([
