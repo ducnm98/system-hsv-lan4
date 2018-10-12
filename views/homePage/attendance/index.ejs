@@ -141,8 +141,10 @@
             <div class="card card-statistics">
               <div class="card-body">
                 <h4 class="card-title">Về tuổi đời</h4>
-                <h3>Sinh viên lớn tuổi nhất: </h3><h3 id="birthDateMax"></h3>
-                <h3>Sinh viên lớn nhỏ nhất: </h3><h3 id="birthDateMin"></h3>
+                <h3>Sinh viên lớn tuổi nhất: </h3>
+                <h3 id="birthDateMax"></h3>
+                <h3>Sinh viên lớn nhỏ nhất: </h3>
+                <h3 id="birthDateMin"></h3>
               </div>
             </div>
           </div>
@@ -243,7 +245,7 @@
       let dataSlDaiBieu = [totalDelegates, 0, 0, 0];
       let dataCoCau = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       let dataReligionGroup = [0, 0, 0, 0];
-    let dataNation = [0, 0, 0, 0, 0, 0];
+      let dataNation = [0, 0, 0, 0, 0, 0];
       $.each(datas, function (key, value) {
         if (key == "nameMax") {
           $('#birthDateMax').text(`${value[0].fullName}-${new Date().getFullYear() - new Date(value[0].birthDate).getFullYear()}`);
@@ -292,8 +294,12 @@
               dataCoCau[6] += item.num ? item.num : 0;
               temp += item.num;
             }
-            if (item._id == "6") {
+            if (item._id == "KỸ SƯ" || item._id == "6") {
               dataCoCau[7] += item.num ? item.num : 0;
+              temp += item.num;
+            }
+            if (item._id == "CỬ NHÂN") {
+              dataCoCau[8] += item.num ? item.num : 0;
               temp += item.num;
             }
           })
@@ -302,14 +308,14 @@
         if (key == "partyMembers") {
           value.map(item => {
             if (item._id == true || item._id == "true") {
-              dataCoCau[8] += item.num ? item.num : 0;
+              dataCoCau[9] += item.num ? item.num : 0;
             }
           })
         }
         if (key == "isYouth") {
           value.map(item => {
             if (item._id == true || item._id == "true") {
-              dataCoCau[9] += item.num ? item.num : 0;
+              dataCoCau[10] += item.num ? item.num : 0;
             }
           })
         }
@@ -363,7 +369,7 @@
             "ĐB Đương nhiên: " + getPercent(dataSlDaiBieu[1], totalDelegates) + "%",
             "ĐB Từ cơ sở: " + getPercent(dataSlDaiBieu[2], totalDelegates) + "%",
             "ĐB Chỉ định: " + getPercent(dataSlDaiBieu[3], totalDelegates) + "%"
-            ],
+          ],
           datasets: [{
             label: 'Đại biểu',
             data: dataSlDaiBieu,
@@ -394,16 +400,17 @@
         type: 'bar',
         data: {
           labels: [
-            "ĐB là Nữ: " + getPercent(dataCoCau[0], totalDelegates) + "%", 
-            "ĐB là SV: " + getPercent(dataCoCau[1], totalDelegates) + "%", 
-            "SV năm 1: " + getPercent(dataCoCau[2], totalDelegates) + "%", 
-            "SV năm 2: " + getPercent(dataCoCau[3], totalDelegates) + "%", 
-            "SV năm 3: " + getPercent(dataCoCau[4], totalDelegates) + "%", 
-            "SV năm 4: " + getPercent(dataCoCau[5], totalDelegates) + "%", 
-            "SV năm 5: " + getPercent(dataCoCau[6], totalDelegates) + "%", 
-            "SV năm 6: " + getPercent(dataCoCau[7], totalDelegates) + "%", 
-            "ĐB là Đảng viên: " + getPercent(dataCoCau[8], totalDelegates) + "%", 
-            "ĐB là Đoàn viên: " + getPercent(dataCoCau[9], totalDelegates) + "%"
+            "ĐB là Nữ: " + getPercent(dataCoCau[0], totalDelegates) + "%",
+            "ĐB là SV: " + getPercent(dataCoCau[1], totalDelegates) + "%",
+            "SV năm 1: " + getPercent(dataCoCau[2], totalDelegates) + "%",
+            "SV năm 2: " + getPercent(dataCoCau[3], totalDelegates) + "%",
+            "SV năm 3: " + getPercent(dataCoCau[4], totalDelegates) + "%",
+            "SV năm 4: " + getPercent(dataCoCau[5], totalDelegates) + "%",
+            "SV năm 5: " + getPercent(dataCoCau[6], totalDelegates) + "%",
+            "Kỹ sư: " + getPercent(dataCoCau[7], totalDelegates) + "%",
+            "Cử nhân: " + getPercent(dataCoCau[8], totalDelegates) + "%",
+            "ĐB là Đảng viên: " + getPercent(dataCoCau[9], totalDelegates) + "%",
+            "ĐB là Đoàn viên: " + getPercent(dataCoCau[10], totalDelegates) + "%"
           ],
           datasets: [{
             label: 'Đại biểu',
@@ -411,6 +418,10 @@
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
               'rgba(255, 206, 86, 0.2)',
               'rgba(75, 192, 192, 0.2)',
               'rgba(153, 102, 255, 0.2)',
@@ -429,23 +440,27 @@
               'rgba(255, 206, 86, 0.2)',
               'rgba(75, 192, 192, 0.2)',
               'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
             ],
             borderWidth: 1
           }]
         },
         options: options
       });
-      
+
       console.log(dataNation);
       let nation = new Chart($("#nation").get(0).getContext("2d"), {
         type: 'bar',
         data: {
           labels: [
             "Kinh: " + getPercent(dataNation[0], totalDelegates) + "%",
-            "Thiểu số: " + getPercent(dataNation[1], totalDelegates) + "%", 
-            "Hoa: " + getPercent(dataNation[2], totalDelegates) + "%", 
-            "Khơ me: " + getPercent(dataNation[3], totalDelegates) + "%", 
-            "Châu Ro: " + getPercent(dataNation[4], totalDelegates) + "%", 
+            "Thiểu số: " + getPercent(dataNation[1], totalDelegates) + "%",
+            "Hoa: " + getPercent(dataNation[2], totalDelegates) + "%",
+            "Khơ me: " + getPercent(dataNation[3], totalDelegates) + "%",
+            "Châu Ro: " + getPercent(dataNation[4], totalDelegates) + "%",
             "Khác: " + getPercent(dataNation[5], totalDelegates) + "%"
           ],
           datasets: [{
