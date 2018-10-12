@@ -246,10 +246,10 @@
     let dataNation = [0, 0, 0, 0, 0, 0];
       $.each(datas, function (key, value) {
         if (key == "nameMax") {
-          $('#birthDateMax').text(`${value.fullName}`)
+          $('#birthDateMax').text(`${value[0].fullName}-${new Date().getFullYear() - new Date(value[0].birthDate).getFullYear()}`);
         }
         if (key == "nameMin") {
-          $('#birthDateMin').text(`${value.fullName}`)
+          $('#birthDateMin').text(`${value[0].fullName}-${new Date().getFullYear() - new Date(value[0].birthDate).getFullYear()}`);
         }
         if (key == "typeOfDelegate") {
           value.map(item => {

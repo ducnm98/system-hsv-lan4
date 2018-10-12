@@ -158,38 +158,8 @@ module.exports = router => {
           }
         }
       ]);
-      let birthDateMax = await mongoose.model("attendance").aggregate([
-        {
-          $match: {
-            _id: mongoose.Types.ObjectId(`${req.params.id}`)
-          }
-        },
-        { $unwind: "$delegates" },
-        { $unwind: "$delegates.birthDate" },
-        {
-          $group: {
-            _id: "$delegates.delegateId",
-            max: { $max: "$delegates.birthDate" },
-          }
-        },
-      ]);
-      let birthDateMin = await mongoose.model("attendance").aggregate([
-        {
-          $match: {
-            _id: mongoose.Types.ObjectId(`${req.params.id}`)
-          }
-        },
-        { $unwind: "$delegates" },
-        { $unwind: "$delegates.birthDate" },
-        {
-          $group: {
-            _id: "$delegates.delegateId",
-            min: { $min: "$delegates.birthDate" },
-          }
-        },
-      ]);
-      let nameMin = await mongoose.model('delegates').findOne({ _id: birthDateMin[0]._id })
-      let nameMax = await mongoose.model('delegates').findOne({ _id: birthDateMax[0]._id })
+      let nameMax = await mongoose.model('delegates').find().sort({ birthDate: 1}).limit(1);
+      let nameMin = await mongoose.model('delegates').find().sort({ birthDate: -1}).limit(1);
       let data = {
         religionGroup,
         genderGroup,
@@ -201,9 +171,7 @@ module.exports = router => {
         nation,
         isYouth,
         numberOfYear,
-        birthDateMin,
         nameMin,
-        birthDateMax,
         nameMax,
         _id: req.params.id
       };
