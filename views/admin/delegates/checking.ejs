@@ -260,14 +260,14 @@
     $('#delegatesComingMssv').keypress(function (e) {
       if (e.keyCode == 13) {
         let sessionId = $('#session').val();
-        let delegatesId = $('#delegatesComing').val();
+        let delegatesId = $('#delegatesComingMssv').val();
         $.ajax({
           url: `/admin/delegates/checking/${sessionId}/mssv/${delegatesId}`,
           method: "PUT",
           success: function (result) {
             let { userInfo, attendance } = result.data;
             let birthDate = new Date(userInfo.birthDate);
-            $('#delegatesComing').val('');
+            $('#delegatesComingMssv').val('');
             $('#delegatesIdNumber').text(userInfo.IdNumber);
             $('#delegatesName').text(userInfo.fullName);
             $('#delegatesBirthDate').text(`${birthDate.getDate()}/${birthDate.getMonth() + 1}/${birthDate.getFullYear()}`);
@@ -277,11 +277,11 @@
             $('#delegatesImage').attr("src", userInfo.imageLink);
             $('#attendatedDelegates').text(attendance.delegates.length);
             $('#absentedDelegate').text(138 - attendance.delegates.length);
-            $('#delegatesComing').notify("Điểm danh đại biểu thành công", "success");
+            $('#delegatesComingMssv').notify("Điểm danh đại biểu thành công", "success");
           },
           error: function (result) {
-            $('#delegatesComing').val('');
-            $('#delegatesComing').notify("Điểm danh đại biểu thất bại", "danger");
+            $('#delegatesComingMssv').val('');
+            $('#delegatesComingMssv').notify("Điểm danh đại biểu thất bại", "danger");
           }
         })
       }
@@ -322,14 +322,14 @@
     $('#delegatesGoOutMssv').keypress(function (e) {
       if (e.keyCode == 13) {
         let sessionId = $('#session').val();
-        let delegatesId = $('#delegatesGoOut').val();
+        let delegatesId = $('#delegatesGoOutMssv').val();
         $.ajax({
           url: `/admin/delegates/checking/${sessionId}/mssv/${delegatesId}`,
           method: "DELETE",
           success: function (result) {
             let { userInfo, attendance } = result.data;
             let birthDate = new Date(userInfo.birthDate);
-            $('#delegatesGoOut').val('')
+            $('#delegatesGoOutMssv').val('')
             $('#delegatesIdNumber').text(userInfo.IdNumber);
             $('#delegatesName').text(userInfo.fullName);
             $('#delegatesBirthDate').text(`${birthDate.getDate()}/${birthDate.getMonth() + 1}/${birthDate.getFullYear()}`);
@@ -339,11 +339,11 @@
             $('#delegatesImage').attr("src", userInfo.imageLink);
             $('#attendatedDelegates').text(attendance.delegates.length);
             $('#absentedDelegate').text(138 - attendance.delegates.length);
-            $('#delegatesGoOut').notify("Xác nhận đại biểu rời khỏi hội trường thành công", "success");
+            $('#delegatesGoOutMssv').notify("Xác nhận đại biểu rời khỏi hội trường thành công", "success");
           },
           error: function (result) {
-            $('#delegatesGoOut').val('');
-            $('#delegatesGoOut').notify("Xác nhận đại biểu thất bại", "danger");
+            $('#delegatesGoOutMssv').val('');
+            $('#delegatesGoOutMssv').notify("Xác nhận đại biểu thất bại", "danger");
           }
         })
       }
