@@ -180,6 +180,22 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title text-primary">Đại biểu vào hội trường</h2>
+                  <textarea class="form-control" id="delegatesComingMssv" rows="4"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title text-danger">Đại biểu ra hội trường</h2>
+                  <textarea class="form-control" id="delegatesGoOutMssv" rows="4"></textarea>
+                </div>
+              </div>
+            </div>
           </div>
 
 
@@ -241,12 +257,74 @@
     });
   </script>
   <script>
+    $('#delegatesComingMssv').keypress(function (e) {
+      if (e.keyCode == 13) {
+        let sessionId = $('#session').val();
+        let delegatesId = $('#delegatesComing').val();
+        $.ajax({
+          url: `/admin/delegates/checking/${sessionId}/mssv/${delegatesId}`,
+          method: "PUT",
+          success: function (result) {
+            let { userInfo, attendance } = result.data;
+            let birthDate = new Date(userInfo.birthDate);
+            $('#delegatesComing').val('');
+            $('#delegatesIdNumber').text(userInfo.IdNumber);
+            $('#delegatesName').text(userInfo.fullName);
+            $('#delegatesBirthDate').text(`${birthDate.getDate()}/${birthDate.getMonth() + 1}/${birthDate.getFullYear()}`);
+            $('#delegatesType').text(userInfo.typeOfDelegate.substring(9));
+            $('#delegatesFaculty').text(userInfo.faculty);
+            $('#delegatesClass').text(userInfo.class);
+            $('#delegatesImage').attr("src", userInfo.imageLink);
+            $('#attendatedDelegates').text(attendance.delegates.length);
+            $('#absentedDelegate').text(138 - attendance.delegates.length);
+            $('#delegatesComing').notify("Điểm danh đại biểu thành công", "success");
+          },
+          error: function (result) {
+            $('#delegatesComing').val('');
+            $('#delegatesComing').notify("Điểm danh đại biểu thất bại", "danger");
+          }
+        })
+      }
+    });
+  </script>
+  <script>
     $('#delegatesGoOut').keypress(function (e) {
       if (e.keyCode == 13) {
         let sessionId = $('#session').val();
         let delegatesId = $('#delegatesGoOut').val();
         $.ajax({
           url: `/admin/delegates/checking/${sessionId}/${delegatesId}`,
+          method: "DELETE",
+          success: function (result) {
+            let { userInfo, attendance } = result.data;
+            let birthDate = new Date(userInfo.birthDate);
+            $('#delegatesGoOut').val('')
+            $('#delegatesIdNumber').text(userInfo.IdNumber);
+            $('#delegatesName').text(userInfo.fullName);
+            $('#delegatesBirthDate').text(`${birthDate.getDate()}/${birthDate.getMonth() + 1}/${birthDate.getFullYear()}`);
+            $('#delegatesType').text(userInfo.typeOfDelegate.substring(9));
+            $('#delegatesFaculty').text(userInfo.faculty);
+            $('#delegatesClass').text(userInfo.class);
+            $('#delegatesImage').attr("src", userInfo.imageLink);
+            $('#attendatedDelegates').text(attendance.delegates.length);
+            $('#absentedDelegate').text(138 - attendance.delegates.length);
+            $('#delegatesGoOut').notify("Xác nhận đại biểu rời khỏi hội trường thành công", "success");
+          },
+          error: function (result) {
+            $('#delegatesGoOut').val('');
+            $('#delegatesGoOut').notify("Xác nhận đại biểu thất bại", "danger");
+          }
+        })
+      }
+    });
+  </script>
+  <script>
+    $('#delegatesGoOutMssv').keypress(function (e) {
+      if (e.keyCode == 13) {
+        let sessionId = $('#session').val();
+        let delegatesId = $('#delegatesGoOut').val();
+        $.ajax({
+          url: `/admin/delegates/checking/${sessionId}/mssv/${delegatesId}`,
           method: "DELETE",
           success: function (result) {
             let { userInfo, attendance } = result.data;

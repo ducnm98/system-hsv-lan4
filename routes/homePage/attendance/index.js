@@ -143,6 +143,21 @@ module.exports = router => {
           }
         }
       ]);
+      let birthDate = await mongoose.model("attendance").aggregate([
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          }
+        },
+        { $unwind: "$delegates" },
+        {
+          $group: {
+            _id: "$birthDate",
+            max: { $max: "$birthDate" },
+            min: { $min: "$birthDate" },
+          }
+        }
+      ]);
       let data = {
         religionGroup,
         genderGroup,
@@ -153,11 +168,12 @@ module.exports = router => {
         typeOfDelegate,
         isYouth,
         numberOfYear,
+        birthDate,
         _id: req.params.id
       };
       setTimeout(function() {
-        updateAnalytics(data)
-      }, 2000)
+        updateAnalytics(data);
+      }, 2000);
       return res.render("homePage/attendance", {
         sessionInfo,
         religionGroup,

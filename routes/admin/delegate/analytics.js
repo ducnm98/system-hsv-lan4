@@ -112,7 +112,7 @@ module.exports = {
     let numberOfYear = await mongoose.model("attendance").aggregate([
       {
         $match: {
-          _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          _id: mongoose.Types.ObjectId(`${id}`)
         }
       },
       { $unwind: "$delegates" },
@@ -127,7 +127,7 @@ module.exports = {
     let isYouth = await mongoose.model("attendance").aggregate([
       {
         $match: {
-          _id: mongoose.Types.ObjectId(`${req.params.id}`)
+          _id: mongoose.Types.ObjectId(`${id}`)
         }
       },
       { $unwind: "$delegates" },
@@ -139,6 +139,36 @@ module.exports = {
         }
       }
     ]);
+    let nation = await mongoose.model("attendance").aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(`${id}`)
+        }
+      },
+      { $unwind: "$delegates" },
+      { $unwind: "$delegates.nation" },
+      {
+        $group: {
+          _id: "$delegates.nation",
+          num: { $sum: 1 }
+        }
+      }
+    ]);
+    let birthDate = await mongoose.model("attendance").aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(`${id}`)
+        }
+      },
+      { $unwind: "$delegates" },
+      {
+        $group: {
+          _id: "$birthDate",
+          max: { $max: "$birthDate" },
+          min: { $min: "$birthDate" },
+        }
+      }
+    ]);
     let data = {
       religionGroup,
       genderGroup,
@@ -146,10 +176,11 @@ module.exports = {
       isALeaderAssociation,
       politic,
       partyMembers,
-      numberOfYear,
       typeOfDelegate,
       isYouth,
-      _id: id
+      numberOfYear,
+      birthDate,
+      _id: req.params.id
     };
     updateAnalytics(data);
   }
