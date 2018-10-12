@@ -131,7 +131,7 @@ module.exports = router => {
       let nation = await mongoose.model("attendance").aggregate([
         {
           $match: {
-            _id: mongoose.Types.ObjectId(`${id}`)
+            _id: mongoose.Types.ObjectId(`${req.params.id}`)
           }
         },
         { $unwind: "$delegates" },
