@@ -181,7 +181,7 @@ module.exports = {
       numberOfYear,
       nation,
       birthDate,
-      _id: req.params.id
+      _id: id
     };
     updateAnalytics(data);
   }
